@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rest, Restore, Refill — 30-Day Burnout Recovery Journal</title>
+<style>
+  :root{
+    --paper:#FFFDF4;          /* page card */
+    --pale-yellow:#FBF3CF;    /* background under the page */
+    --pale-yellow-2:#F7EBB8;
+    --ink:#4a4234;
+    --ink-soft:#7a7059;
+    --sage:#7f9b6e;
+    --sage-dark:#5c7a4d;
+    --sage-pale:#eef3e6;
+    --rose:#c98a7d;
+    --gold:#c9a227;
+    --line:#e6dcc0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #fdf8dd 0%, transparent 60%),
+      radial-gradient(1000px 500px at 110% 110%, #f6e9ad 0%, transparent 55%),
+      linear-gradient(160deg, var(--pale-yellow) 0%, var(--pale-yellow-2) 100%);
+    min-height:100vh;
+    color:var(--ink);
+    font-family:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  .app{max-width:860px;margin:0 auto;padding:18px 16px 80px;}
+
+  /* ---------- header ---------- */
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    padding:10px 4px 14px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .leaf{font-size:26px;}
+  .brand h1{font-family:Georgia,"Times New Roman",serif;font-size:20px;margin:0;color:var(--sage-dark);font-weight:600;}
+  .brand small{display:block;color:var(--ink-soft);font-size:12px;font-weight:400;}
+  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  select.roundpick{
+    font:inherit;font-size:13px;padding:7px 10px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);cursor:pointer;
+  }
+  button.tbtn{
+    font:inherit;font-size:13px;padding:7px 12px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--sage-dark);cursor:pointer;
+  }
+  button.tbtn:hover{background:var(--sage-pale);}
+  .savebadge{
+    font-size:12px;color:var(--sage-dark);background:var(--sage-pale);border-radius:20px;
+    padding:4px 12px;opacity:0;transition:opacity .4s;white-space:nowrap;
+  }
+  .savebadge.show{opacity:1;}
+
+  /* ---------- day navigation strip ---------- */
+  nav.days{
+    display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 16px;
+    background:rgba(255,253,244,.65);border:1px solid var(--line);border-radius:14px;padding:10px;
+  }
+  nav.days button{
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--line);cursor:pointer;
+    background:#fff;color:var(--ink-soft);font-size:12px;font-family:inherit;position:relative;
+  }
+  nav.days button.special{width:auto;border-radius:17px;padding:0 11px;font-size:11px;}
+  nav.days button.hasdata{border-color:var(--sage);color:var(--sage-dark);background:var(--sage-pale);}
+  nav.days button.active{background:var(--sage);border-color:var(--sage);color:#fff;font-weight:700;}
+
+  /* ---------- the page card ---------- */
+  .page{
+    position:relative;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(160,140,60,.14);
+    padding:34px 34px 30px;
+    overflow:hidden;
+  }
+  .page::before{content:"";position:absolute;inset:10px;border:1px solid #efe6c8;border-radius:12px;pointer-events:none;}
+  .corner{position:absolute;font-size:30px;opacity:.85;pointer-events:none;}
+  .corner.tl{top:16px;right:18px;}
+  .corner.br{bottom:14px;left:18px;transform:rotate(180deg);}
+
+  .phase{
+    display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:var(--sage);border-radius:20px;padding:3px 12px;margin-bottom:8px;
+  }
+  h2.pagetitle{font-family:Georgia,serif;font-size:26px;margin:2px 0 2px;color:var(--sage-dark);font-weight:600;}
+  .pagesub{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+
+  .block{margin:16px 0;}
+  .blocklabel{
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-dark);
+    font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;
+  }
+  .scripture{
+    background:var(--sage-pale);border-left:4px solid var(--sage);border-radius:0 12px 12px 0;
+    padding:14px 16px;
+  }
+  .scripture .ref{font-weight:700;color:var(--sage-dark);font-size:14px;}
+  .scripture .verse{font-family:Georgia,serif;font-style:italic;font-size:16px;margin-top:4px;color:var(--ink);}
+  .anchor{
+    background:#fdf7e2;border:1px dashed #dccf9a;border-radius:12px;padding:12px 16px;font-size:14.5px;
+  }
+  .prayerbox{
+    background:#f9f1f0;border-left:4px solid var(--rose);border-radius:0 12px 12px 0;
+    padding:12px 16px;font-family:Georgia,serif;font-style:italic;font-size:15px;color:#7a5a52;
+  }
+  .actionbox{
+    background:#fff;border:2px solid var(--gold);border-radius:12px;padding:12px 16px;font-size:14.5px;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .actionbox .star{font-size:20px;line-height:1.2;}
+
+  /* ---------- inputs ---------- */
+  textarea{
+    width:100%;min-height:74px;resize:vertical;
+    font-family:Georgia,serif;font-size:15px;color:var(--ink);line-height:1.6;
+    border:none;border-radius:8px;padding:10px 12px;
+    background:
+      repeating-linear-gradient(transparent,transparent 27px,#e9dfc2 27px,#e9dfc2 28px);
+    background-color:#fffef9;outline:1px solid var(--line);
+  }
+  textarea:focus{outline:2px solid var(--sage);}
+  input[type=text],input[type=date]{
+    font-family:Georgia,serif;font-size:15px;color:var(--ink);
+    border:none;border-bottom:2px solid var(--line);background:transparent;
+    padding:6px 4px;outline:none;min-width:120px;
+  }
+  input[type=text]:focus,input[type=date]:focus{border-bottom-color:var(--sage);}
+  .prompt{margin:14px 0;}
+  .prompt .q{font-size:14.5px;font-weight:600;margin-bottom:6px;color:var(--ink);}
+  .prompt .q .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:var(--sage);color:#fff;
+    font-size:12px;margin-right:8px;font-weight:700;
+  }
+
+  /* notice checkboxes */
+  .notices{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;cursor:pointer;user-select:none;
+    border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:13.5px;background:#fff;
+    transition:all .15s;
+  }
+  .chip input{display:none;}
+  .chip.on{background:var(--sage-pale);border-color:var(--sage);color:var(--sage-dark);font-weight:600;}
+  .chip .dot{width:10px;height:10px;border-radius:50%;border:2px solid #cfc7ac;}
+  .chip.on .dot{background:var(--sage);border-color:var(--sage);}
+
+  /* sliders */
+  .sliderrow{display:flex;align-items:center;gap:12px;margin:9px 0;}
+  .sliderrow .slabel{flex:0 0 200px;font-size:14px;}
+  .sliderrow input[type=range]{flex:1;accent-color:var(--sage);}
+  .sliderrow .sval{
+    flex:0 0 34px;text-align:center;font-weight:700;color:var(--sage-dark);
+    background:var(--sage-pale);border-radius:8px;padding:3px 0;font-size:14px;
+  }
+  .inline{display:flex;gap:24px;flex-wrap:wrap;align-items:center;}
+
+  .bigcheck{
+    display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;
+    background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14.5px;
+  }
+  .bigcheck input{width:20px;height:20px;accent-color:var(--sage);cursor:pointer;}
+  .bigcheck.on{background:var(--sage-pale);border-color:var(--sage);font-weight:600;color:var(--sage-dark);}
+
+  /* nav footer */
+  .pagenav{display:flex;justify-content:space-between;margin-top:20px;gap:10px;}
+  .pagenav button{
+    font:inherit;font-size:14px;padding:10px 18px;border-radius:12px;border:1px solid var(--line);
+    background:var(--paper);color:var(--sage-dark);cursor:pointer;font-weight:600;
+  }
+  .pagenav button:hover{background:var(--sage-pale);}
+  .pagenav button:disabled{opacity:.35;cursor:default;}
+
+  /* home page bits */
+  .mapgrid{display:grid;grid-template-columns:1fr;gap:8px;}
+  .maprow{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;align-items:baseline;}
+  .maprow b{color:var(--sage-dark);white-space:nowrap;}
+  .roundsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;}
+  .roundcard{
+    background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;text-align:center;
+  }
+  .roundcard:hover{border-color:var(--sage);}
+  .roundcard.current{border:2px solid var(--sage);background:var(--sage-pale);}
+  .roundcard .rname{font-weight:700;font-size:13px;color:var(--sage-dark);}
+  .roundcard .rmeta{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+  .roundcard .bar{height:6px;border-radius:3px;background:#eee8d2;margin-top:7px;overflow:hidden;}
+  .roundcard .bar i{display:block;height:100%;background:var(--sage);border-radius:3px;}
+  .progressline{font-size:13px;color:var(--ink-soft);margin:4px 0 0;}
+
+  /* how-to + micro practices */
+  .howto{margin:6px 0 0;padding-left:22px;font-size:14px;}
+  .howto li{margin:5px 0;}
+  .microrow{display:flex;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 14px;font-size:13.5px;margin:6px 0;align-items:baseline;}
+  .microrow b{color:var(--sage-dark);flex:0 0 52px;}
+
+  /* scripture cards */
+  .cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px;}
+  .scard{
+    border:1.5px dashed var(--sage);border-radius:14px;padding:14px 16px;background:#fffef8;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .scard .cday{font-size:10px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase;}
+  .scard .ctitle{font-family:Georgia,serif;font-size:16px;color:var(--sage-dark);font-weight:600;margin:2px 0;}
+  .scard .cref{font-size:12px;font-weight:700;color:var(--sage-dark);}
+  .scard .cverse{font-family:Georgia,serif;font-style:italic;font-size:13px;margin:6px 0;}
+  .scard .clabel{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);font-weight:700;margin-top:8px;}
+  .scard .ctext{font-size:12px;color:var(--ink);}
+
+  .footer-note{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:26px;font-style:italic;}
+  @media(max-width:600px){
+    .page{padding:24px 18px;}
+    .sliderrow .slabel{flex-basis:130px;font-size:13px;}
+  }
+  @media print{
+    body{background:#fff;}
+    nav.days,header.top,.pagenav{display:none;}
+    .page{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <span class="leaf">🌿</span>
+      <div>
+        <h1>Rest, Restore, Refill</h1>
+        <small>A 30-Day Christian Burnout Recovery Journal · For the Nurse &amp; Caregiver</small>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="savebadge" id="saveBadge">Saved ✓</span>
+      <select class="roundpick" id="roundPick" title="Which 30-day round of the year you are on"></select>
+      <button class="tbtn" onclick="goTo('home')" title="Overview page">Home</button>
+      <button class="tbtn" onclick="exportData()" title="Download a backup of all your entries">Backup</button>
+      <button class="tbtn" onclick="importData()" title="Restore entries from a backup file">Restore</button>
+    </div>
+  </header>
+
+  <nav class="days" id="dayNav"></nav>
+
+  <main class="page" id="pageHost">
+    <span class="corner tl">🌸</span>
+    <span class="corner br">🌸</span>
+    <div id="pageContent"></div>
+    <div class="pagenav">
+      <button id="prevBtn" onclick="step(-1)">← Previous</button>
+      <button id="nextBtn" onclick="step(1)">Next →</button>
+    </div>
+  </main>
+
+  <p class="footer-note">Daily: one quiet moment. Weekly: one protected boundary. Monthly: one honest check-in.</p>
+</div>
+
+<input type="file" id="importFile" accept=".json" style="display:none">
+
+<script>
+/* ============================== JOURNAL CONTENT ============================== */
+const DAYS = [
+{n:1,t:"Permission to Rest",ref:"Matthew 11:28",verse:"Come unto me, all ye that labour and are heavy laden, and I will give you rest.",anchor:"Today is not about fixing everything. It is about admitting the truth: exhaustion is data, not a moral failure.",prompts:["Where am I carrying weight that was never meant to be mine?","What would rest look like tonight if I stopped negotiating with guilt?","What part of me needs gentleness, not another productivity lecture?"],action:"Choose one 20-minute recovery window today: sit outside, stretch, pray, shower slowly, or do nothing on purpose.",prayer:"Lord, meet me in my tired place. Teach me to receive rest without shame."},
+{n:2,t:"Restore My Soul",ref:"Psalm 23:1-3",verse:"He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake.",anchor:"Critical care asks you to stay alert for everyone else. Restoration asks you to notice yourself again.",prompts:["What did my body try to tell me this week?","Which part of my soul feels thin, dry, or overused?","What green pasture do I need in real life, not just in theory?"],action:"Hydrate, eat protein, and step away from one noise source for ten minutes. Basic care still counts.",prayer:"Shepherd of my soul, lead me away from depletion and back to quiet strength."},
+{n:3,t:"New Mercy",ref:"Lamentations 3:22-23",verse:"It is of the LORD's mercies that we are not consumed... they are new every morning.",anchor:"Yesterday may have been messy. New mercy means you do not have to drag yesterday's chart into today's heart.",prompts:["What am I still punishing myself for that God has not asked me to carry?","Where did I survive instead of thrive, and what support do I need?","What is one mercy I can receive before I give anything away today?"],action:"Write one sentence of grace over yourself and place it somewhere visible.",prayer:"God of mercy, help me start again without shame or denial."},
+{n:4,t:"Strength for the Faint",ref:"Isaiah 40:29",verse:"He giveth power to the faint; and to them that have no might he increaseth strength.",anchor:"Burnout often makes strong people feel weak. That does not mean you are failing; it means your reserves need rebuilding.",prompts:["Where have I confused being strong with being silent?","What task, person, or pattern drains me fastest?","What would asking for help look like without apologizing for needing it?"],action:"Name one support person and send one honest check-in message.",prayer:"Lord, increase strength where my own supply is gone."},
+{n:5,t:"Be Still",ref:"Psalm 46:10",verse:"Be still, and know that I am God.",anchor:"Stillness can feel suspicious when you are used to alarms, needs, and urgency. Stillness is not laziness; it is recalibration.",prompts:["What happens inside me when nothing is demanding my attention?","Which urgent thing may not actually be important?","How can I practice two minutes of stillness before reacting today?"],action:"Set a two-minute timer. Breathe slowly and repeat: God is God; I am not the whole hospital.",prayer:"God, quiet the alarm inside me and restore my center."},
+{n:6,t:"Guard Your Heart",ref:"Proverbs 4:23",verse:"Keep thy heart with all diligence; for out of it are the issues of life.",anchor:"A guarded heart is not a hard heart. It is a heart with a door, a lock, and wisdom about who gets the key.",prompts:["What boundaries protect my compassion instead of blocking it?","Where have I been emotionally available beyond my actual capacity?","What conversation or request needs a calm 'not today'?"],action:"Practice one boundary sentence out loud: 'I cannot take that on right now.' No courtroom defense needed.",prayer:"Lord, give me a tender heart with wise boundaries."},
+{n:7,t:"Come Apart",ref:"Mark 6:31",verse:"Come ye yourselves apart into a desert place, and rest a while.",anchor:"Even Jesus called His team away from constant need. That settles it: rest is holy, not optional.",prompts:["What rhythm has been running me into the ground?","What do I need to stop doing on my day off?","How can I protect one small Sabbath pocket this week?"],action:"Block one recovery appointment with yourself. Treat it like a shift you cannot cancel.",prayer:"Jesus, lead me apart before I come apart."},
+{n:8,t:"Do Not Grow Weary",ref:"Galatians 6:9",verse:"And let us not be weary in well doing: for in due season we shall reap, if we faint not.",anchor:"Weariness in well-doing is real. The goal is not to care less; it is to care from a replenished place.",prompts:["Where am I weary of doing the right thing?","What fruit am I expecting too quickly?","What could help me keep going without running myself ragged?"],action:"Identify one low-value obligation to pause, delegate, or reduce this week.",prayer:"Lord, teach me endurance that does not abuse my body or soul."},
+{n:9,t:"Cast the Care",ref:"1 Peter 5:7",verse:"Casting all your care upon him; for he careth for you.",anchor:"Some cares need action. Some need prayer. Some need to be handed back to God because they were never yours to control.",prompts:["What care keeps replaying in my head after the shift ends?","What is mine to do, and what is God's to hold?","What would change if I believed I am cared for too?"],action:"Write a 'God box' list: cares you are releasing today. Close the notebook when finished.",prayer:"Father, I cast these cares because You care for me."},
+{n:10,t:"Peace Beyond the Math",ref:"Philippians 4:6-7",verse:"And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.",anchor:"Peace beyond understanding is not denial. It is steadiness when the numbers, rooms, and responsibilities are still complicated.",prompts:["What anxiety is asking for my attention today?","What request do I need to make known to God plainly?","Where do I need peace in my mind, not just a prettier schedule?"],action:"Turn one worry into a direct prayer request. Then choose the next right step only.",prayer:"God of peace, guard my heart and mind through Christ."},
+{n:11,t:"Near to the Broken",ref:"Psalm 34:18",verse:"The LORD is nigh unto them that are of a broken heart.",anchor:"ICU work exposes you to grief on repeat. Your heart may be bruised from witnessing what most people never see.",prompts:["Which patient, family, or moment am I still carrying?","What grief have I minimized because I had to keep working?","What would compassionate mourning look like for me?"],action:"Light a candle, say a name if appropriate, or write a private blessing over a hard memory.",prayer:"Lord, be near to the places in me that have had to stay professional while hurting."},
+{n:12,t:"Renewed Inwardly",ref:"2 Corinthians 4:16",verse:"Though our outward man perish, yet the inward man is renewed day by day.",anchor:"Renewal is not always dramatic. Sometimes it looks like one honest page, one glass of water, one early bedtime.",prompts:["What drains my outer life, and what renews my inner life?","What small renewal practice actually works for me?","Where have I overlooked ordinary daily restoration?"],action:"Pick a repeatable five-minute renewal ritual for the next three days.",prayer:"Lord, renew me from the inside, one day at a time."},
+{n:13,t:"Ask for Wisdom",ref:"James 1:5",verse:"If any of you lack wisdom, let him ask of God... and it shall be given him.",anchor:"Burnout makes everything feel urgent and foggy. Wisdom helps you stop reacting from depletion.",prompts:["Where do I need wisdom more than willpower?","What decision have I postponed because I am too tired to think clearly?","What information, counsel, or pause would help me choose well?"],action:"Choose one decision and write three options: keep, change, or release.",prayer:"God, give me clean wisdom and courage to follow it."},
+{n:14,t:"Presence and Rest",ref:"Exodus 33:14",verse:"My presence shall go with thee, and I will give thee rest.",anchor:"The promise is not just rest after everything is perfect. It is God's presence with you in the middle of the road.",prompts:["Where did I sense God's presence this week, even faintly?","What kept me too distracted to notice Him?","How can I invite God into my next shift before I clock in?"],action:"Before your next work block, pray one sentence in the parking lot or at your front door.",prayer:"Lord, go with me, and give me rest that circumstances cannot steal."},
+{n:15,t:"Renew Your Mind",ref:"Romans 12:2",verse:"Be ye transformed by the renewing of your mind.",anchor:"Burnout scripts are bossy: 'I am behind,' 'I am trapped,' 'I should be able to handle this.' Today we challenge the script.",prompts:["What sentence keeps repeating in my mind when I am exhausted?","Is that sentence true, useful, and from God?","What truthful replacement can I practice this week?"],action:"Write one thought to retire and one truth to rehearse.",prayer:"Lord, renew the thoughts that have been wearing me down."},
+{n:16,t:"Work Heartily, Not Empty",ref:"Colossians 3:23",verse:"And whatsoever ye do, do it heartily, as to the Lord, and not unto men.",anchor:"Serving heartily does not mean serving hollow. God is not asking you to pour from a bone-dry cup.",prompts:["Where have I performed for approval rather than served from purpose?","What part of my work still feels meaningful?","What would it look like to honor God and my limits at the same time?"],action:"Name one meaningful moment from work, however small, and let it count.",prayer:"Lord, reconnect my work to purpose without letting it swallow my identity."},
+{n:17,t:"Number Our Days",ref:"Psalm 90:12",verse:"So teach us to number our days, that we may apply our hearts unto wisdom.",anchor:"Time is holy. A schedule that never makes room for your actual life is not wisdom; it is slow leakage.",prompts:["What has my calendar been teaching my heart?","What matters to me that keeps getting the leftover crumbs?","What is one wise time boundary I need this month?"],action:"Choose one calendar block for health, prayer, family, or joy before the week fills itself.",prayer:"Teach me to use my days with wisdom, not autopilot."},
+{n:18,t:"Tenderness Without Resentment",ref:"Ephesians 4:32",verse:"And be ye kind one to another, tenderhearted, forgiving one another.",anchor:"Resentment often grows where boundaries were missing. Forgiveness does not require you to re-enter the same burnout pattern.",prompts:["Who or what am I resenting, and what need is underneath it?","What boundary would reduce bitterness going forward?","Where do I need to release a debt without pretending the harm was okay?"],action:"Write a boundary-based forgiveness statement: 'I release ___, and I will protect ___.'",prayer:"Lord, keep my heart tender and my boundaries wise."},
+{n:19,t:"Through the Waters",ref:"Isaiah 43:2",verse:"When thou passest through the waters, I will be with thee.",anchor:"You may be passing through, but you are not abandoned in the water. Survival is not your forever address.",prompts:["What waters am I walking through right now?","What evidence do I have that I have not been abandoned?","What help would keep me from trying to swim alone?"],action:"Ask for one practical support: coverage, childcare help, counseling, prayer, meal prep, or rest.",prayer:"God, be with me in the waters and lead me toward dry ground."},
+{n:20,t:"Peace I Leave",ref:"John 14:27",verse:"Peace I leave with you, my peace I give unto you.",anchor:"Peace is not the absence of responsibility. It is the presence of Christ steadying what responsibility shakes.",prompts:["Where am I craving peace most — body, mind, home, money, work, or spirit?","What steals peace quickly and repeatedly?","What peaceful practice can become non-negotiable?"],action:"Create a five-minute decompression bridge between work and home.",prayer:"Jesus, let Your peace settle where my nervous system has been bracing."},
+{n:21,t:"Beloved Sleep",ref:"Psalm 127:2",verse:"He giveth his beloved sleep.",anchor:"Sleep is not a weakness. It is maintenance for the brain, body, mood, metabolism, patience, and discernment. Case closed.",prompts:["What most often delays my sleep?","What do I need to stop doing in the last 30 minutes before bed?","How would I treat sleep if I believed it was a gift from God?"],action:"Choose one sleep boundary tonight: screen cutoff, caffeine cutoff, bath, prayer, or earlier lights out.",prayer:"Lord, help me receive sleep as beloved care."},
+{n:22,t:"Joy as Strength",ref:"Nehemiah 8:10",verse:"The joy of the LORD is your strength.",anchor:"Burnout narrows life to tasks. Joy widens the room again. Joy is not silly; joy is strength with rhythm.",prompts:["What used to make me laugh, create, explore, or feel light?","Where did duty crowd out delight?","What small joy can I schedule without earning it first?"],action:"Do one unnecessary beautiful thing today: flowers, music, a walk, tea, color, or a favorite meal.",prayer:"Lord, return joy to me in ways my tired heart can recognize."},
+{n:23,t:"Sound Mind",ref:"2 Timothy 1:7",verse:"For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.",anchor:"A sound mind needs fewer panic tabs open. Fear can visit, but it does not get to manage the unit of your life.",prompts:["What fear has been making decisions for me?","What would power, love, and a sound mind choose here?","What information would reduce fear without feeding rumination?"],action:"Limit one anxiety loop: no doom-scrolling, no replaying a shift, no checking the same issue ten times.",prayer:"God, replace fear's noise with power, love, and a sound mind."},
+{n:24,t:"Lay Aside the Weight",ref:"Hebrews 12:1",verse:"Let us lay aside every weight... and let us run with patience the race that is set before us.",anchor:"Not every weight is a sin; some weights are just too heavy for this season. Wisdom knows the difference.",prompts:["What weight am I carrying because I am afraid to disappoint someone?","What expectation needs to be renegotiated?","What race is actually mine right now?"],action:"Remove, reduce, or delay one nonessential burden this week. The world will keep spinning. Dramatic, I know.",prayer:"Lord, help me lay aside what is slowing my healing."},
+{n:25,t:"Wonderfully Made",ref:"Psalm 139:14",verse:"I will praise thee; for I am fearfully and wonderfully made.",anchor:"Your body is not a machine that exists only to clock in, push through, and recover just enough to do it again.",prompts:["How have I talked to my body lately?","What body signal deserves respect instead of judgment?","What care would honor the body God made?"],action:"Do one body-honoring act: protein, gentle movement, stretching, pain support, hydration, or rest.",prayer:"Lord, help me honor my body as Your creation, not my enemy."},
+{n:26,t:"Justice, Mercy, Humility",ref:"Micah 6:8",verse:"What doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?",anchor:"Nursing can stir moral distress when systems fall short. Your heartbreak may be a sign your conscience is alive.",prompts:["Where have I felt moral distress or helpless anger?","What part is mine to advocate for, and what part is system-level?","How can I walk humbly without carrying God's whole justice department on my back?"],action:"Name one realistic advocacy step and one burden to release.",prayer:"God of justice and mercy, guide my advocacy without consuming my soul."},
+{n:27,t:"Good from the Hard",ref:"Romans 8:28",verse:"All things work together for good to them that love God.",anchor:"This verse is not permission to minimize pain. It is hope that pain does not get the final word.",prompts:["What hard thing am I not ready to call good — and that is okay?","What strength, clarity, or compassion has grown from difficulty?","Where do I need hope without forced positivity?"],action:"Write one honest lament and one honest hope. Both can sit on the same page.",prayer:"Lord, work good without asking me to pretend the hard was easy."},
+{n:28,t:"Rejoice, Pray, Give Thanks",ref:"1 Thessalonians 5:16-18",verse:"Rejoice evermore. Pray without ceasing. In every thing give thanks.",anchor:"Gratitude does not erase fatigue; it trains the eye to spot grace while you rebuild strength.",prompts:["What small grace did I almost miss today?","What do I need to keep praying about without obsessing over?","What gratitude feels honest, not forced?"],action:"Write three tiny thank-yous: body, work, home, faith, future, or relationships.",prayer:"Lord, make gratitude a lamp, not a mask."},
+{n:29,t:"An Expected End",ref:"Jeremiah 29:11",verse:"For I know the thoughts that I think toward you... to give you an expected end.",anchor:"Burnout whispers that the future is just more of the same. God still thinks peace over your future.",prompts:["What future do I fear, and what future do I actually desire?","What needs to change for my life to become sustainable?","What one decision would move me toward peace?"],action:"Write a one-paragraph vision for a sustainable life six months from now.",prayer:"Lord, help me move toward the future You are making, not the one burnout predicts."},
+{n:30,t:"Fear Not",ref:"Isaiah 41:10",verse:"Fear thou not; for I am with thee: be not dismayed; for I am thy God.",anchor:"Recovery is not a 30-day magic trick. It is a return to wise rhythms, honest support, and God's steady presence.",prompts:["What changed in me over these 30 days?","What warning signs tell me I am sliding back toward burnout?","What three practices will I carry forward for the next 90 days?"],action:"Create a maintenance plan: one daily practice, one weekly boundary, one monthly check-in.",prayer:"God, strengthen, help, and uphold me as I continue healing."}
+];
+
+const WEEKS = {
+  w1:{title:"Week 1 Reset: Tell the Truth",after:7,qs:["What did I learn about my exhaustion?","Which recovery action helped most?","What needs protection next week?"]},
+  w2:{title:"Week 2 Reset: Release the Weight",after:14,qs:["What burden did I identify that is not mine to carry?","Where did I ask for help or need to ask?","What is God teaching me about limits?"]},
+  w3:{title:"Week 3 Reset: Rebuild Rhythm",after:21,qs:["What rhythm gave me steadiness?","What sleep, food, movement, prayer, or social habit needs attention?","What boundary has to become normal, not dramatic?"]},
+  w4:{title:"Closing Reflection: Sustain the Healing",after:30,qs:["What is my personal burnout relapse plan?","What do I need from my people, my workplace, and myself?","What promise from Scripture will anchor my next 90 days?"]}
+};
+const SCORECARD = ["Rest","Peace","Energy","Boundaries","Joy"];
+const BASELINE_ITEMS = ["Emotional exhaustion","Cynicism or irritability","Compassion fatigue","Moral distress","Sleep debt","Physical tension or pain","Spiritual dryness","Loss of joy","Feeling trapped","Difficulty recovering after shifts"];
+const NOTICES = ["Body fatigue","Mental fog","Emotional heaviness","Spiritual dryness","Resentment or irritation","A real moment of grace"];
+const MICRO = [
+  ["Body","Water, protein, gentle movement, pain support, and sleep protection."],
+  ["Mind","One honest thought retired; one truthful thought rehearsed."],
+  ["Spirit","Scripture, prayer, worship, silence, and surrender."],
+  ["Work","Boundary language, realistic advocacy, and decompression after shifts."],
+  ["Joy","Beauty, play, laughter, connection, and travel-dream fuel."]
+];
+const PHASE = n => n<=7 ? "Days 1–7 · Stabilize" : n<=14 ? "Days 8–14 · Release" : n<=21 ? "Days 15–21 · Rebuild" : "Days 22–30 · Sustain";
+
+/* page order: home, baseline, d1..d7, w1, d8..d14, w2, d15..d21, w3, d22..d30, w4 */
+const ORDER = ["home","baseline"];
+for(let i=1;i<=30;i++){ ORDER.push("d"+i); if(i===7)ORDER.push("w1"); if(i===14)ORDER.push("w2"); if(i===21)ORDER.push("w3"); if(i===30)ORDER.push("w4"); }
+ORDER.push("cards","notes");
+
+/* ============================== STORAGE ============================== */
+const STORE_KEY = "burnoutJournal.nurse.v1";
+let store = load();
+function load(){
+  try{ const raw = localStorage.getItem(STORE_KEY); if(raw) return JSON.parse(raw); }catch(e){}
+  return { currentRound:1, currentPage:"home", rounds:{} };
+}
+let saveTimer=null;
+function save(showBadge=true){
+  localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  if(showBadge){
+    const b=document.getElementById("saveBadge");
+    b.classList.add("show");
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>b.classList.remove("show"),1400);
+  }
+}
+function roundData(r){
+  r = r ?? store.currentRound;
+  if(!store.rounds[r]) store.rounds[r] = {startDate:null, pages:{}};
+  return store.rounds[r];
+}
+function pageData(pid){
+  const rd = roundData();
+  if(!rd.pages[pid]) rd.pages[pid] = {};
+  return rd.pages[pid];
+}
+function getVal(pid,key,fallback=""){ const p=roundData().pages[pid]; return p && key in p ? p[key] : fallback; }
+function setVal(pid,key,val){
+  const rd = roundData();
+  if(!rd.pages[pid]) rd.pages[pid]={};
+  rd.pages[pid][key]=val;
+  if(!rd.startDate) rd.startDate = new Date().toISOString().slice(0,10);
+  save();
+  refreshNavMarks();
+}
+function pageHasData(pid,r){
+  const rd = store.rounds[r ?? store.currentRound];
+  if(!rd || !rd.pages[pid]) return false;
+  return Object.values(rd.pages[pid]).some(v => v!=="" && v!==false && v!==null && v!==undefined);
+}
+
+/* ============================== RENDER HELPERS ============================== */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function ta(pid,key,placeholder,minH){
+  return `<textarea data-pid="${pid}" data-key="${key}" placeholder="${esc(placeholder)}" ${minH?`style="min-height:${minH}px"`:""}>${esc(getVal(pid,key))}</textarea>`;
+}
+function txt(pid,key,placeholder,width){
+  return `<input type="text" data-pid="${pid}" data-key="${key}" placeholder="${esc(placeholder)}" value="${esc(getVal(pid,key))}" ${width?`style="min-width:${width}px"`:""}>`;
+}
+function slider(pid,key,label){
+  const v = getVal(pid,key,0);
+  return `<div class="sliderrow"><span class="slabel">${esc(label)}</span>
+    <input type="range" min="0" max="10" step="1" value="${v}" data-pid="${pid}" data-key="${key}">
+    <span class="sval">${v}</span></div>`;
+}
+function chip(pid,key,label){
+  const on = getVal(pid,key,false)===true;
+  return `<label class="chip ${on?"on":""}"><input type="checkbox" data-pid="${pid}" data-key="${key}" ${on?"checked":""}><span class="dot"></span>${esc(label)}</label>`;
+}
+function bigcheck(pid,key,label){
+  const on = getVal(pid,key,false)===true;
+  return `<label class="bigcheck ${on?"on":""}"><input type="checkbox" data-pid="${pid}" data-key="${key}" ${on?"checked":""}>${esc(label)}</label>`;
+}
+
+/* ============================== PAGE TEMPLATES ============================== */
+function renderHome(){
+  const roundsHtml = Array.from({length:12},(_,i)=>{
+    const r=i+1, rd=store.rounds[r];
+    const done = rd ? ORDER.filter(p=>p.startsWith("d")&&pageHasData(p,r)).length : 0;
+    const started = rd && rd.startDate ? new Date(rd.startDate+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"}) : "not started";
+    return `<div class="roundcard ${r===store.currentRound?"current":""}" onclick="switchRound(${r})">
+      <div class="rname">Round ${r}</div><div class="rmeta">${started}</div>
+      <div class="bar"><i style="width:${Math.round(done/30*100)}%"></i></div>
+      <div class="rmeta">${done} / 30 days</div></div>`;
+  }).join("");
+  return `
+    <h2 class="pagetitle">Rest, Restore, Refill</h2>
+    <div class="pagesub">Scripture, reflection, boundaries, and renewal for the weary caregiver · Spring botanical edition</div>
+
+    <div class="block"><div class="blocklabel">🌼 Start Here</div>
+      <p style="font-size:14.5px;margin:6px 0;">This journal was designed for the caregiver who is tired in a way sleep alone does not fix. It combines practical burnout recovery tools with daily Scripture, prayer, and honest reflection — especially mindful of critical-care nursing, where compassion, vigilance, grief, moral stress, and responsibility can stack up quietly until your soul says, <i>"Ma'am, we need a meeting."</i></p>
+    </div>
+
+    <div class="block"><div class="blocklabel">📖 How to Use It</div>
+      <ol class="howto">
+        <li>Read the Scripture assignment slowly.</li>
+        <li>Complete the check-in honestly. No performance points are awarded here.</li>
+        <li>Answer at least one journaling prompt. More is welcome; honesty is the goal.</li>
+        <li>Choose the small recovery action. Tiny steps done consistently beat grand plans done twice.</li>
+        <li>Keep the botanical Scripture cards (🌸 Cards page at the end) as prayer cards and bedside reminders — you can print them, too.</li>
+      </ol>
+    </div>
+
+    <div class="block"><div class="blocklabel">🌱 Daily Micro-Practices</div>
+      ${MICRO.map(m=>`<div class="microrow"><b>${esc(m[0])}:</b> ${esc(m[1])}</div>`).join("")}
+    </div>
+
+    <div class="block"><div class="blocklabel">🙏 Opening Prayer</div>
+      <div class="prayerbox">Lord, meet me honestly in this season. Help me stop minimizing what is heavy, stop glorifying exhaustion, and stop confusing calling with constant depletion. Restore my soul, renew my mind, strengthen my body, and teach me rhythms that honor You and the life You gave me. Amen.</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">🗺️ The 30-Day Recovery Map</div>
+      <div class="mapgrid">
+        <div class="maprow"><b>Days 1–7 · Stabilize</b> Tell the truth about exhaustion, receive rest, and begin protecting your heart.</div>
+        <div class="maprow"><b>Days 8–14 · Release</b> Name worries, grief, and burdens that have followed you home.</div>
+        <div class="maprow"><b>Days 15–21 · Rebuild</b> Renew your mind, calendar, peace, and sleep rhythms.</div>
+        <div class="maprow"><b>Days 22–30 · Sustain</b> Recover joy, lay aside weights, honor your body, and plan forward.</div>
+      </div>
+    </div>
+
+    <div class="block"><div class="blocklabel">📏 Ground Rule</div>
+      <div class="anchor">You do not have to earn rest by collapsing first. You can love God, serve patients, care for family, and still have limits. <b>Limits are not rebellion; they are design features.</b> If you miss a day, continue. No shame spirals. This is a journal, not a courtroom exhibit.</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">📅 Your Year of Recovery — 12 rounds of 30 days</div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:4px 0 10px;">Finish a round, start the next. Each round keeps its own entries, so you can look back at any month of the year. Tap a round to open it.</p>
+      <div class="roundsgrid">${roundsHtml}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">ℹ️ Wise Note</div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0;">This journal supports reflection, spiritual encouragement, and healthy routines. It is not a substitute for medical, mental-health, pastoral, legal, or workplace advice. Burnout can overlap with depression, anxiety, trauma, grief, and sleep deprivation. If symptoms are intense, persistent, or safety-related, involve a licensed professional, employee assistance program, trusted leader, or clinician.</p>
+    </div>`;
+}
+
+function renderBaseline(){
+  const pid="baseline";
+  return `
+    <span class="phase">Before Day 1</span>
+    <h2 class="pagetitle">Baseline Burnout Check-In</h2>
+    <div class="pagesub">A private self-check, not a diagnosis. Rate each area from 0 to 10 today. 0 means "not present"; 10 means "loud and hard to ignore."</div>
+    <div class="block">${BASELINE_ITEMS.map((it,i)=>slider(pid,"b"+i,it)).join("")}</div>
+    <div class="block"><div class="blocklabel">🤝 Personal Recovery Covenant</div>
+      <div class="anchor">For the next 30 days, I will practice honesty without shame, rest without apology, prayer without performance, and boundaries without guilt.</div>
+    </div>
+    <div class="block"><div class="blocklabel">💛 My reason for healing</div>${ta(pid,"reason","Write your reason here…",60)}</div>`;
+}
+
+function renderDay(n){
+  const d = DAYS[n-1], pid = "d"+n;
+  const dateVal = getVal(pid,"date","");
+  return `
+    <span class="phase">${PHASE(n)}</span>
+    <h2 class="pagetitle">Day ${String(n).padStart(2,"0")} — ${esc(d.t)}</h2>
+    <div class="pagesub">Daily Recovery Page · <label>Date: <input type="date" data-pid="${pid}" data-key="date" value="${esc(dateVal)}"></label></div>
+
+    <div class="block"><div class="blocklabel">📖 Scripture Assignment</div>
+      <div class="scripture"><span class="ref">${esc(d.ref)}</span> — read the full passage, then sit with this line:
+        <div class="verse">"${esc(d.verse)}"</div></div>
+    </div>
+
+    <div class="block"><div class="blocklabel">⚕️ Clinical + Spiritual Anchor</div>
+      <div class="anchor">${esc(d.anchor)}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">👀 Today I Notice</div>
+      <div class="notices">${NOTICES.map((it,i)=>chip(pid,"n"+i,it)).join("")}</div>
+      <div style="margin-top:12px">${slider(pid,"stress","Stress level")}</div>
+      <div class="inline" style="margin-top:6px"><label style="font-size:14px">One word for today: ${txt(pid,"word","one word…",160)}</label></div>
+    </div>
+
+    <div class="block"><div class="blocklabel">✍️ Journal Prompts</div>
+      ${d.prompts.map((q,i)=>`<div class="prompt"><div class="q"><span class="num">${i+1}</span>${esc(q)}</div>${ta(pid,"p"+i,"Write honestly — no performance points awarded here…")}</div>`).join("")}
+    </div>
+
+    <div class="block"><div class="blocklabel">🌱 Small Recovery Action</div>
+      <div class="actionbox"><span class="star">✳️</span><div>${esc(d.action)}</div></div>
+      <div style="margin-top:10px">${bigcheck(pid,"done","I did one small healing thing today.")}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">🙏 Prayer + Release</div>
+      <div class="prayerbox">${esc(d.prayer)}</div>
+      <div class="prompt" style="margin-top:12px"><div class="q">What I release tonight:</div>${ta(pid,"release","Set it down here…",60)}</div>
+    </div>`;
+}
+
+function renderWeek(wid){
+  const w = WEEKS[wid], pid = wid;
+  return `
+    <span class="phase">After Day ${w.after}</span>
+    <h2 class="pagetitle">${esc(w.title)}</h2>
+    <div class="pagesub">Pause here before moving forward. Weekly reflection is where patterns stop hiding. No shame, just data and grace.</div>
+    <div class="block"><div class="blocklabel">📊 Weekly Scorecard (0–10)</div>
+      ${SCORECARD.map((s,i)=>slider(pid,"s"+i,s)).join("")}
+    </div>
+    <div class="block"><div class="blocklabel">✍️ Reflection</div>
+      ${w.qs.map((q,i)=>`<div class="prompt"><div class="q"><span class="num">${i+1}</span>${esc(q)}</div>${ta(pid,"q"+i,"Take your time…")}</div>`).join("")}
+    </div>
+    <div class="block"><div class="blocklabel">🌿 One practice I will carry into the next stretch</div>
+      ${ta(pid,"carry","Name it here…",60)}
+    </div>
+    ${wid==="w4"?`<div class="block"><div class="anchor">Burnout recovery is not proved by never feeling tired again. It is proved by noticing earlier, asking sooner, resting honestly, and refusing to abandon yourself while caring for everybody else. <b>When you're ready, start the next round from the Home page — your year continues.</b></div></div>`:""}`;
+}
+
+function renderCards(){
+  return `
+    <span class="phase">Botanical Scripture Cards</span>
+    <h2 class="pagetitle">Scripture Cards</h2>
+    <div class="pagesub">Bedside reminders, prayer cards, and pocket encouragement. Keep the one you need most where you will actually see it — pretty cards buried in a drawer do not count as a spiritual strategy.</div>
+    <div class="block" style="display:flex;gap:10px;align-items:center;">
+      <button class="tbtn" onclick="window.print()">🖨️ Print the cards</button>
+      <span style="font-size:12.5px;color:var(--ink-soft);">Print single-sided on card stock and cut along the dashed borders.</span>
+    </div>
+    <div class="cardgrid">
+      ${DAYS.map(d=>`<div class="scard">
+        <div class="cday">Day ${String(d.n).padStart(2,"0")}</div>
+        <div class="ctitle">${esc(d.t)}</div>
+        <div class="cref">${esc(d.ref)}</div>
+        <div class="cverse">"${esc(d.verse)}"</div>
+        <div class="clabel">Breath Prayer</div>
+        <div class="ctext">${esc(d.prayer)}</div>
+        <div class="clabel">Prompt</div>
+        <div class="ctext">${esc(d.prompts[0])}</div>
+      </div>`).join("")}
+    </div>`;
+}
+
+function renderNotes(){
+  const pid="notes";
+  return `
+    <span class="phase">Anytime</span>
+    <h2 class="pagetitle">Notes + Prayers</h2>
+    <div class="pagesub">A free page for anything the daily pages could not hold — prayers, names, verses, worries handed over, answers noticed.</div>
+    <div class="block">${ta(pid,"n1","Write freely here…",420)}</div>
+    <div class="block"><div class="blocklabel">🌿 Continue in Wisdom</div>
+      <div class="anchor">Burnout recovery is not proved by never feeling tired again. It is proved by noticing earlier, asking sooner, resting honestly, and refusing to abandon yourself while caring for everybody else.</div>
+    </div>`;
+}
+
+/* ============================== NAVIGATION ============================== */
+function renderPage(){
+  const pid = store.currentPage;
+  let html;
+  if(pid==="home") html = renderHome();
+  else if(pid==="baseline") html = renderBaseline();
+  else if(pid==="cards") html = renderCards();
+  else if(pid==="notes") html = renderNotes();
+  else if(pid.startsWith("w")) html = renderWeek(pid);
+  else html = renderDay(parseInt(pid.slice(1)));
+  document.getElementById("pageContent").innerHTML = html;
+  bindInputs();
+  const idx = ORDER.indexOf(pid);
+  document.getElementById("prevBtn").disabled = idx<=0;
+  document.getElementById("nextBtn").disabled = idx>=ORDER.length-1;
+  refreshNavMarks();
+  window.scrollTo({top:0});
+}
+function goTo(pid){ store.currentPage = pid; save(false); renderPage(); }
+function step(dir){
+  const idx = ORDER.indexOf(store.currentPage) + dir;
+  if(idx>=0 && idx<ORDER.length) goTo(ORDER[idx]);
+}
+function switchRound(r){
+  store.currentRound = r;
+  buildRoundPick();
+  renderPage();
+  save(false);
+}
+function buildNav(){
+  const nav = document.getElementById("dayNav");
+  nav.innerHTML = ORDER.map(pid=>{
+    let label, cls="";
+    if(pid==="home"){label="🏠";cls="special";}
+    else if(pid==="baseline"){label="Check-in";cls="special";}
+    else if(pid==="w1"){label="Wk 1";cls="special";}
+    else if(pid==="w2"){label="Wk 2";cls="special";}
+    else if(pid==="w3"){label="Wk 3";cls="special";}
+    else if(pid==="w4"){label="Close";cls="special";}
+    else if(pid==="cards"){label="🌸 Cards";cls="special";}
+    else if(pid==="notes"){label="Notes";cls="special";}
+    else label = pid.slice(1);
+    return `<button class="${cls}" data-nav="${pid}" onclick="goTo('${pid}')" title="${pid.startsWith("d")?"Day "+pid.slice(1)+": "+DAYS[pid.slice(1)-1].t:label}">${label}</button>`;
+  }).join("");
+}
+function refreshNavMarks(){
+  document.querySelectorAll("#dayNav button").forEach(b=>{
+    const pid = b.dataset.nav;
+    b.classList.toggle("active", pid===store.currentPage);
+    b.classList.toggle("hasdata", pid!=="home" && pageHasData(pid));
+  });
+}
+function buildRoundPick(){
+  const sel = document.getElementById("roundPick");
+  sel.innerHTML = Array.from({length:12},(_,i)=>{
+    const r=i+1, rd=store.rounds[r];
+    const tag = rd && rd.startDate ? " · started "+new Date(rd.startDate+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"}) : "";
+    return `<option value="${r}" ${r===store.currentRound?"selected":""}>Round ${r} of 12${tag}</option>`;
+  }).join("");
+}
+document.getElementById("roundPick").addEventListener("change", e=>switchRound(parseInt(e.target.value)));
+
+/* ============================== INPUT BINDING (autosave) ============================== */
+function bindInputs(){
+  document.querySelectorAll("#pageContent [data-pid]").forEach(el=>{
+    const pid = el.dataset.pid, key = el.dataset.key;
+    if(el.type==="checkbox"){
+      el.addEventListener("change",()=>{
+        setVal(pid,key,el.checked);
+        const wrap = el.closest(".chip,.bigcheck");
+        if(wrap) wrap.classList.toggle("on",el.checked);
+      });
+    } else if(el.type==="range"){
+      el.addEventListener("input",()=>{
+        el.parentElement.querySelector(".sval").textContent = el.value;
+        setVal(pid,key,parseInt(el.value));
+      });
+    } else {
+      el.addEventListener("input",()=>setVal(pid,key,el.value));
+    }
+  });
+}
+
+/* ============================== BACKUP / RESTORE ============================== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(store,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "burnout-journal-backup-"+new Date().toISOString().slice(0,10)+".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importData(){ document.getElementById("importFile").click(); }
+document.getElementById("importFile").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      if(!data.rounds) throw new Error("not a journal backup");
+      if(confirm("Replace everything in this journal with the backup file? Your current entries will be overwritten.")){
+        store = data; save(); buildRoundPick(); renderPage();
+      }
+    }catch(err){ alert("That file doesn't look like a journal backup."); }
+    e.target.value="";
+  };
+  reader.readAsText(f);
+});
+
+/* ============================== INIT ============================== */
+const hashPage = location.hash.replace("#","");
+if(hashPage && ORDER.includes(hashPage)) store.currentPage = hashPage;
+buildNav();
+buildRoundPick();
+renderPage();
+</script>
+</body>
+</html>
