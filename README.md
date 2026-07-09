@@ -13,6 +13,7 @@ reader's own device. Nothing is collected or shared.
 | 🌸 Donna's Journal | https://pwan192-art.github.io/journal/ | A wife & caregiver living with fibromyalgia and chronic pain — scriptures on healing, God's love, and rest |
 | 💛 Wife & Caregiver | https://pwan192-art.github.io/journal/wife.html | Any woman caring for a loved one at home |
 | 🩺 Nurse & Caregiver | https://pwan192-art.github.io/journal/nurse.html | The critical-care nurse — the original edition |
+| 🌷 Young Single Mom | https://pwan192-art.github.io/journal/mom.html | A young single mother building a career — scriptures on God's love, provision, and protection |
 
 ## What's inside every edition
 
