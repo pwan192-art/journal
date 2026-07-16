@@ -86,6 +86,16 @@
     overflow:hidden;
   }
   .page::before{content:"";position:absolute;inset:10px;border:1px solid #e8dcb8;border-radius:12px;pointer-events:none;}
+  .page.coverpage::before{display:none;}
+  .page.coverpage .corner{display:none;}
+  .coverhero{margin:-24px -24px 0;}
+  .coverhero img{width:100%;display:block;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .covertitle{text-align:center;padding:22px 10px 8px;}
+  .covertitle h2{font-family:Georgia,"Times New Roman",serif;font-size:30px;margin:0;color:var(--teal-dark);}
+  .coversub{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-deep);margin-top:6px;}
+  .coverline{font-size:13.5px;font-style:italic;color:var(--ink-soft);margin-top:8px;}
+  .beginbtn{margin-top:16px;font:inherit;font-size:15px;font-weight:700;padding:10px 28px;border-radius:24px;border:none;cursor:pointer;background:var(--teal);color:#fff;}
+  .beginbtn:hover{background:var(--teal-dark);}
   .corner{position:absolute;font-size:30px;opacity:.8;pointer-events:none;}
   .corner.tl{top:16px;right:18px;}
   .corner.br{bottom:14px;left:18px;transform:rotate(180deg);}
@@ -643,7 +653,7 @@ function restoreFor(n){
 function themeFor(r){ return THEMES[((r ?? store.currentRound)-1) % 12]; }
 
 /* page order: home, baseline, d1..d7, w1, d8..d14, w2, d15..d21, w3, d22..d30, w4 */
-const ORDER = ["home","baseline"];
+const ORDER = ["cover","home","baseline"];
 for(let i=1;i<=30;i++){ ORDER.push("d"+i); if(i===7)ORDER.push("w1"); if(i===14)ORDER.push("w2"); if(i===21)ORDER.push("w3"); if(i===30)ORDER.push("w4"); }
 ORDER.push("cards","notes");
 
@@ -652,7 +662,7 @@ const STORE_KEY = "burnoutJournal.dad.v1";
 let store = load();
 function load(){
   try{ const raw = localStorage.getItem(STORE_KEY); if(raw) return JSON.parse(raw); }catch(e){}
-  return { currentRound:1, currentPage:"home", rounds:{} };
+  return { currentRound:1, currentPage:"cover", rounds:{} };
 }
 let saveTimer=null;
 function save(showBadge=true){
@@ -713,6 +723,17 @@ function bigcheck(pid,key,label){
 }
 
 /* ============================== PAGE TEMPLATES ============================== */
+function renderCover(){
+  return `
+    <div class="coverhero"><img src="dad-cover.jpg" alt="Rest and recovery cover art — a man meditating at golden hour beside a jungle waterfall, with his journal, tea, incense, and rolled yoga mat"></div>
+    <div class="covertitle">
+      <h2>Rest, Restore, Recover</h2>
+      <div class="coversub">A 30-Day Reset · For the Dad Who Carries It All</div>
+      <div class="coverline">Wisdom · recovery · money peace · the long game</div>
+      <button class="beginbtn" onclick="goTo('home')">Begin 🧭</button>
+    </div>`;
+}
+
 function renderHome(){
   const roundsHtml = Array.from({length:12},(_,i)=>{
     const r=i+1, rd=store.rounds[r], th=themeFor(r);
@@ -895,13 +916,15 @@ function renderNotes(){
 function renderPage(){
   const pid = store.currentPage;
   let html;
-  if(pid==="home") html = renderHome();
+  if(pid==="cover") html = renderCover();
+  else if(pid==="home") html = renderHome();
   else if(pid==="baseline") html = renderBaseline();
   else if(pid==="cards") html = renderCards();
   else if(pid==="notes") html = renderNotes();
   else if(pid.startsWith("w")) html = renderWeek(pid);
   else html = renderDay(parseInt(pid.slice(1)));
   document.getElementById("pageContent").innerHTML = html;
+  document.getElementById("pageHost").classList.toggle("coverpage", pid==="cover");
   bindInputs();
   const idx = ORDER.indexOf(pid);
   document.getElementById("prevBtn").disabled = idx<=0;
@@ -924,7 +947,8 @@ function buildNav(){
   const nav = document.getElementById("dayNav");
   nav.innerHTML = ORDER.map(pid=>{
     let label, cls="";
-    if(pid==="home"){label="🏠";cls="special";}
+    if(pid==="cover"){label="🧭";cls="special";}
+    else if(pid==="home"){label="🏠";cls="special";}
     else if(pid==="baseline"){label="Check-in";cls="special";}
     else if(pid==="w1"){label="Wk 1";cls="special";}
     else if(pid==="w2"){label="Wk 2";cls="special";}
