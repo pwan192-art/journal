@@ -15,6 +15,7 @@ reader's own device. Nothing is collected or shared.
 | 🩺 Nurse & Caregiver | https://pwan192-art.github.io/journal/nurse.html | The critical-care nurse — the original edition |
 | 🌷 30-Day Christian Recharge (Young Single Mom) | https://pwan192-art.github.io/journal/mom.html | A young single mother building a career — scriptures on God's love, provision, and protection, written gently for the quiet ones |
 | 🧭 Rest, Restore, Recover (Single Dad) | https://pwan192-art.github.io/journal/dad.html | A single dad — fitness & investing expert who worries about money and takes life too seriously. Rotating monthly wisdom (life quotes, African proverbs, biblical Proverbs, dad coaching, money wisdom) + restore practices (meditation, body awareness, learning, connection, CBT) instead of scriptures |
+| 👑 Rest, Restore, Recover (Single Mom) | https://pwan192-art.github.io/journal/her.html | A single mom — beauty baddie, first-time investor, career-builder, girl-trip dreamer. Rotating monthly wisdom (life quotes, African proverbs, biblical Psalms, Haitian proverbs, mom coaching, business & investing guidance) + restore practices (meditation, physical fitness, learning, family connection, CBT), with her Canva cover art |
 
 ## What's inside every edition
 

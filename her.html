@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rest, Restore, Recover — 30-Day Reset for the Mom Building It All</title>
+<style>
+  :root{
+    --paper:#FDF6F0;          /* page card */
+    --ink:#42303a;
+    --ink-soft:#8a6f7a;
+    --teal:#a34b6f;
+    --teal-dark:#7c2f52;
+    --teal-pale:#f9e8ef;
+    --copper:#c1764f;
+    --copper-deep:#94512f;
+    --gold:#c9932e;
+    --slate:#7a5b8f;
+    --slate-pale:#f3edf8;
+    --line:#eedacb;
+    --cream:#fbeadf;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 620px at 12% -10%, #a3125e 0%, transparent 60%),
+      radial-gradient(1000px 540px at 108% 112%, #b8860b 0%, transparent 55%),
+      radial-gradient(820px 480px at -8% 72%, #046a4e 0%, transparent 55%),
+      radial-gradient(700px 420px at 52% 118%, #0f4c81 0%, transparent 60%),
+      radial-gradient(620px 380px at 88% -6%, #ff6f61 0%, transparent 50%),
+      linear-gradient(160deg, #341022 0%, #3b1230 55%, #2a1038 100%);
+    background-color:#31102a;
+    min-height:100vh;
+    color:var(--ink);
+    font-family:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  .app{max-width:860px;margin:0 auto;padding:18px 16px 80px;}
+
+  /* ---------- header ---------- */
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    padding:10px 4px 14px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .leaf{font-size:26px;}
+  .brand h1{font-family:Georgia,"Times New Roman",serif;font-size:20px;margin:0;color:var(--cream);font-weight:600;letter-spacing:.01em;}
+  .brand small{display:block;color:#c8aab8;font-size:12px;font-weight:400;}
+  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  select.roundpick{
+    font:inherit;font-size:13px;padding:7px 10px;border-radius:10px;border:1px solid rgba(242,231,201,.28);
+    background:rgba(250,244,227,.08);color:var(--cream);cursor:pointer;
+  }
+  select.roundpick option{color:var(--ink);background:var(--paper);}
+  button.tbtn{
+    font:inherit;font-size:13px;padding:7px 12px;border-radius:10px;border:1px solid rgba(242,231,201,.28);
+    background:rgba(250,244,227,.08);color:var(--cream);cursor:pointer;
+  }
+  button.tbtn:hover{background:rgba(250,244,227,.18);}
+  .savebadge{
+    font-size:12px;color:#2a0f1f;background:var(--gold);border-radius:20px;
+    padding:4px 12px;opacity:0;transition:opacity .4s;white-space:nowrap;font-weight:700;
+  }
+  .savebadge.show{opacity:1;}
+
+  /* ---------- day navigation strip ---------- */
+  nav.days{
+    display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 16px;
+    background:rgba(30,10,22,.55);border:1px solid rgba(242,231,201,.16);border-radius:14px;padding:10px;
+  }
+  nav.days button{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(242,231,201,.22);cursor:pointer;
+    background:rgba(250,244,227,.05);color:#d3b3c0;font-size:12px;font-family:inherit;position:relative;
+  }
+  nav.days button.special{width:auto;border-radius:17px;padding:0 11px;font-size:11px;}
+  nav.days button.hasdata{border-color:var(--teal);color:#efb3cd;background:rgba(163,75,111,.35);}
+  nav.days button.active{background:var(--gold);border-color:var(--gold);color:#1b1508;font-weight:700;}
+
+  /* ---------- the page card ---------- */
+  .page{
+    position:relative;
+    background:var(--paper);
+    border:1px solid rgba(0,0,0,.25);
+    border-radius:18px;
+    box-shadow:0 18px 50px rgba(0,0,0,.5);
+    padding:34px 34px 30px;
+    overflow:hidden;
+  }
+  .page::before{content:"";position:absolute;inset:10px;border:1px solid #e8dcb8;border-radius:12px;pointer-events:none;}
+  .page.coverpage::before{display:none;}
+  .page.coverpage .corner{display:none;}
+  .coverhero{margin:-24px -24px 0;}
+  .coverhero img{width:100%;display:block;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .covertitle{text-align:center;padding:22px 10px 8px;}
+  .covertitle h2{font-family:Georgia,"Times New Roman",serif;font-size:30px;margin:0;color:var(--teal-dark);}
+  .coversub{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-deep);margin-top:6px;}
+  .coverline{font-size:13.5px;font-style:italic;color:var(--ink-soft);margin-top:8px;}
+  .beginbtn{margin-top:16px;font:inherit;font-size:15px;font-weight:700;padding:10px 28px;border-radius:24px;border:none;cursor:pointer;background:var(--teal);color:#fff;}
+  .beginbtn:hover{background:var(--teal-dark);}
+  .corner{position:absolute;font-size:30px;opacity:.8;pointer-events:none;}
+  .corner.tl{top:16px;right:18px;}
+  .corner.br{bottom:14px;left:18px;transform:rotate(180deg);}
+
+  .phase{
+    display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:var(--teal);border-radius:20px;padding:3px 12px;margin-bottom:8px;
+  }
+  .roundtag{
+    display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--copper-deep);background:#f5e5d2;border:1px solid #e4c8a6;border-radius:20px;
+    padding:3px 12px;margin:0 0 8px 6px;
+  }
+  h2.pagetitle{font-family:Georgia,serif;font-size:26px;margin:2px 0 2px;color:var(--teal-dark);font-weight:600;}
+  .pagesub{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+
+  .block{margin:16px 0;}
+  .blocklabel{
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-dark);
+    font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .wtype{
+    font-size:10px;letter-spacing:.1em;background:var(--copper);color:#fff;
+    border-radius:12px;padding:2px 9px;font-weight:700;
+  }
+  .wisdom{
+    background:var(--teal-pale);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;
+    padding:14px 16px;
+  }
+  .wisdom .wtext{font-family:Georgia,serif;font-style:italic;font-size:17px;color:var(--ink);}
+  .wisdom .wby{font-weight:700;color:var(--teal-dark);font-size:13.5px;margin-top:6px;}
+  .wisdom .wnote{font-size:11.5px;color:var(--ink-soft);margin-top:8px;}
+  .anchor{
+    background:#f9f0d8;border:1px dashed #d9c48e;border-radius:12px;padding:12px 16px;font-size:14.5px;
+  }
+  .reframebox{
+    background:#f7ede1;border-left:4px solid var(--copper);border-radius:0 12px 12px 0;
+    padding:12px 16px;font-family:Georgia,serif;font-style:italic;font-size:15.5px;color:var(--copper-deep);
+  }
+  .restorebox{
+    background:var(--slate-pale);border-left:4px solid var(--slate);border-radius:0 12px 12px 0;
+    padding:12px 16px;font-size:14.5px;
+  }
+  .restorebox .rnote{font-size:11.5px;color:var(--ink-soft);margin-top:8px;}
+  .actionbox{
+    background:#fff;border:2px solid var(--gold);border-radius:12px;padding:12px 16px;font-size:14.5px;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .actionbox .star{font-size:20px;line-height:1.2;}
+
+  /* ---------- inputs ---------- */
+  textarea{
+    width:100%;min-height:74px;resize:vertical;
+    font-family:Georgia,serif;font-size:15px;color:var(--ink);line-height:1.6;
+    border:none;border-radius:8px;padding:10px 12px;
+    background:
+      repeating-linear-gradient(transparent,transparent 27px,#e6dabb 27px,#e6dabb 28px);
+    background-color:#fffdf3;outline:1px solid var(--line);
+  }
+  textarea:focus{outline:2px solid var(--teal);}
+  input[type=text],input[type=date]{
+    font-family:Georgia,serif;font-size:15px;color:var(--ink);
+    border:none;border-bottom:2px solid var(--line);background:transparent;
+    padding:6px 4px;outline:none;min-width:120px;
+  }
+  input[type=text]:focus,input[type=date]:focus{border-bottom-color:var(--teal);}
+  .prompt{margin:14px 0;}
+  .prompt .q{font-size:14.5px;font-weight:600;margin-bottom:6px;color:var(--ink);}
+  .prompt .q .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;
+    font-size:12px;margin-right:8px;font-weight:700;
+  }
+
+  /* notice checkboxes */
+  .notices{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;cursor:pointer;user-select:none;
+    border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:13.5px;background:#fff;
+    transition:all .15s;
+  }
+  .chip input{display:none;}
+  .chip.on{background:var(--teal-pale);border-color:var(--teal);color:var(--teal-dark);font-weight:600;}
+  .chip .dot{width:10px;height:10px;border-radius:50%;border:2px solid #cfc7ac;}
+  .chip.on .dot{background:var(--teal);border-color:var(--teal);}
+
+  /* sliders */
+  .sliderrow{display:flex;align-items:center;gap:12px;margin:9px 0;}
+  .sliderrow .slabel{flex:0 0 200px;font-size:14px;}
+  .sliderrow input[type=range]{flex:1;accent-color:var(--teal);}
+  .sliderrow .sval{
+    flex:0 0 34px;text-align:center;font-weight:700;color:var(--teal-dark);
+    background:var(--teal-pale);border-radius:8px;padding:3px 0;font-size:14px;
+  }
+  .inline{display:flex;gap:24px;flex-wrap:wrap;align-items:center;}
+
+  .bigcheck{
+    display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;
+    background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14.5px;
+  }
+  .bigcheck input{width:20px;height:20px;accent-color:var(--teal);cursor:pointer;}
+  .bigcheck.on{background:var(--teal-pale);border-color:var(--teal);font-weight:600;color:var(--teal-dark);}
+
+  /* nav footer */
+  .pagenav{display:flex;justify-content:space-between;margin-top:20px;gap:10px;}
+  .pagenav button{
+    font:inherit;font-size:14px;padding:10px 18px;border-radius:12px;border:1px solid var(--line);
+    background:#fff;color:var(--teal-dark);cursor:pointer;font-weight:600;
+  }
+  .pagenav button:hover{background:var(--teal-pale);}
+  .pagenav button:disabled{opacity:.35;cursor:default;}
+
+  /* home page bits */
+  .mapgrid{display:grid;grid-template-columns:1fr;gap:8px;}
+  .maprow{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;align-items:baseline;}
+  .maprow b{color:var(--teal-dark);white-space:nowrap;}
+  .roundsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;}
+  .roundcard{
+    background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;text-align:center;
+  }
+  .roundcard:hover{border-color:var(--teal);}
+  .roundcard.current{border:2px solid var(--teal);background:var(--teal-pale);}
+  .roundcard .rname{font-weight:700;font-size:13px;color:var(--teal-dark);}
+  .roundcard .rtheme{font-size:10.5px;color:var(--copper-deep);margin-top:1px;}
+  .roundcard .rmeta{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+  .roundcard .bar{height:6px;border-radius:3px;background:#ece4cb;margin-top:7px;overflow:hidden;}
+  .roundcard .bar i{display:block;height:100%;background:var(--teal);border-radius:3px;}
+
+  /* how-to + micro practices */
+  .howto{margin:6px 0 0;padding-left:22px;font-size:14px;}
+  .howto li{margin:5px 0;}
+  .microrow{display:flex;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 14px;font-size:13.5px;margin:6px 0;align-items:baseline;}
+  .microrow b{color:var(--teal-dark);flex:0 0 92px;}
+
+  /* wisdom cards */
+  .cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px;}
+  .scard{
+    border:1.5px dashed var(--teal);border-radius:14px;padding:14px 16px;background:#fffcf0;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .scard .cday{font-size:10px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase;}
+  .scard .ctitle{font-family:Georgia,serif;font-size:16px;color:var(--teal-dark);font-weight:600;margin:2px 0;}
+  .scard .cref{font-size:12px;font-weight:700;color:var(--copper-deep);}
+  .scard .cverse{font-family:Georgia,serif;font-style:italic;font-size:13px;margin:6px 0;}
+  .scard .clabel{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);font-weight:700;margin-top:8px;}
+  .scard .ctext{font-size:12px;color:var(--ink);}
+
+  .footer-note{text-align:center;color:rgba(242,231,201,.72);font-size:12px;margin-top:26px;font-style:italic;}
+  @media(max-width:600px){
+    .page{padding:24px 18px;}
+    .sliderrow .slabel{flex-basis:130px;font-size:13px;}
+  }
+  @media print{
+    body{background:#fff;}
+    nav.days,header.top,.pagenav{display:none;}
+    .page{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <span class="leaf">👑</span>
+      <div>
+        <h1>Rest, Restore, Recover</h1>
+        <small>A 30-Day Reset · For the Mom Building It All</small>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="savebadge" id="saveBadge">Saved ✓</span>
+      <select class="roundpick" id="roundPick" title="Which 30-day round of the year you are on"></select>
+      <button class="tbtn" onclick="goTo('home')" title="Overview page">Home</button>
+      <button class="tbtn" onclick="exportData()" title="Download a backup of all your entries">Backup</button>
+      <button class="tbtn" onclick="importData()" title="Restore entries from a backup file">Restore</button>
+    </div>
+  </header>
+
+  <nav class="days" id="dayNav"></nav>
+
+  <main class="page" id="pageHost">
+    <span class="corner tl">👑</span>
+    <span class="corner br">👑</span>
+    <div id="pageContent"></div>
+    <div class="pagenav">
+      <button id="prevBtn" onclick="step(-1)">← Previous</button>
+      <button id="nextBtn" onclick="step(1)">Next →</button>
+    </div>
+  </main>
+
+  <p class="footer-note">Daily: one honest check-in. Weekly: one protected boundary. Monthly: a new round with new wisdom.</p>
+</div>
+
+<input type="file" id="importFile" accept=".json" style="display:none">
+
+<script>
+/* ============================== JOURNAL CONTENT ==============================
+   Each day carries THREE wisdom variants (w[0..2]). The one shown rotates with
+   the round you're on, so every month reads differently.
+   Restore practices rotate on a 12-month cycle — see RESTORE below.            */
+const DAYS = [
+{n:1,t:"Permission to Rest",w:[
+  {y:"Life Quote",by:"Audre Lorde",x:"Caring for myself is not self-indulgence, it is self-preservation."},
+  {y:"African Proverb",by:"African proverb",x:"Even the best dancer on the stage must retire sometime."},
+  {y:"Psalms",by:"Psalm 23:2-3 (KJV)",x:"He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul."}],
+ anchor:"You keep a nine-step routine for your face and a zero-step routine for your soul. Between the job hunt, the baby, the budget, and the group chat, rest keeps sliding to the bottom of the list — but rest is the primer. Everything applied over exhaustion cracks by noon.",
+ prompts:["Where am I running on fumes and calling it hustle?","What would real rest look like this week if guilt didn't get a vote?","Who taught me that rest must be earned by collapsing first — and were they right?"],
+ action:"Claim one 20-minute rest window tonight: no phone, no laundry, no scrolling. Just rest, on purpose.",
+ reframe:"Rest is the primer, not the reward. Nothing applies smoothly over burnout."},
+{n:2,t:"The Glow-Up Includes Recovery",w:[
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Piti piti, zwazo fè nich li — little by little, the bird builds its nest."},
+  {y:"Life Quote",by:"Maya Angelou",x:"We delight in the beauty of the butterfly, but rarely admit the changes it has gone through to achieve that beauty."},
+  {y:"Money Wisdom",by:"The money desk",x:"Burnout is a payday loan against next month's energy. The interest rate is criminal. Stop borrowing."}],
+ anchor:"Your skin repairs itself at night, not during the contour. Money grows while you leave it alone, not while you refresh the app. You work the same way: the glow-up happens in the recovery window, and skipping it just means paying for it later — with interest.",
+ prompts:["What in my life is overworked right now — body, mind, or money?","When did I last take a genuine day off, and what actually happened?","What am I afraid would fall apart if I actually rested?"],
+ action:"Schedule one real recovery block this week and defend it like a hair appointment you booked three weeks ago.",
+ reframe:"The glow-up happens between the effort. So does the living."},
+{n:3,t:"Lighten Up",w:[
+  {y:"Life Quote",by:"Phyllis Diller",x:"A smile is a curve that sets everything straight."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Your kid doesn't need a flawless mom at dinner. They need your real laugh — the one that ruins your lipstick."},
+  {y:"Psalms",by:"Psalm 126:2 (KJV)",x:"Then was our mouth filled with laughter, and our tongue with singing."}],
+ anchor:"Somewhere between the applications and the bedtime routine, you started grading every day pass/fail. But your life is not a final exam, and your kid is not the examiner. They're the playground. Ten percent less seriousness today changes the whole room.",
+ prompts:["When did I last laugh so hard it surprised me?","What part of my life am I treating like a courtroom that is actually a playground?","What would 10% less seriousness look like today?"],
+ action:"Do one deliberately silly thing with your kid today — and let yourself be terrible at it in public.",
+ reframe:"Serious dreams do not require a serious face all day."},
+{n:4,t:"Listen to the Body",w:[
+  {y:"Psalms",by:"Psalm 139:14 (KJV)",x:"I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Sak vid pa kanpe — an empty sack cannot stand up."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"You track your kid's fever to the tenth of a degree. Your own exhaustion deserves at least a glance at the thermometer."}],
+ anchor:"You know every ingredient in your serums, but when your own body sends messages — the tight jaw, the 3 a.m. wake-ups, the shoulders living next to your ears — you mark them as read and move on. Today, be the client. Let the woman who takes care of everyone write herself a gentle prescription.",
+ prompts:["What is my body telling me lately that I keep overruling?","Where does stress land first in my body — jaw, shoulders, gut, sleep?","If my best friend described these symptoms, what would I tell her to do?"],
+ action:"Do a head-to-toe body scan, then fix ONE recovery variable today: sleep, water, or stretching.",
+ reframe:"My body is not a notification to swipe away."},
+{n:5,t:"Money Truth Day",w:[
+  {y:"Money Wisdom",by:"The money desk",x:"You cannot manage a number you refuse to look at. Facing the balance is the first deposit."},
+  {y:"African Proverb",by:"African proverb",x:"Do not look where you fell, but where you slipped."},
+  {y:"Psalms",by:"Psalm 112:7 (KJV)",x:"He shall not be afraid of evil tidings: his heart is fixed, trusting in the LORD."}],
+ anchor:"The account balance is not a monster under the bed, and checking it is not a jump scare — it's a flashlight. You're a novice investor, not a lost cause: every woman who ever built wealth started exactly where you are, with a number she had to make herself look at.",
+ prompts:["What do I actually KNOW about my money right now, versus what I fear about it?","When did money start feeling scary to me — and whose voice is that fear in?","What is one number I've been avoiding, and what would facing it make possible?"],
+ action:"Log into every account today and write down three numbers: what comes in, what goes out, what's saved. No fixing today — just facing.",
+ reframe:"Numbers are information, not a verdict on my worth."},
+{n:6,t:"You Were Never Meant to Do This Alone",w:[
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Men anpil, chay pa lou — many hands make the load light."},
+  {y:"African Proverb",by:"African proverb",x:"A single bracelet does not jingle."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Supermom is a marketing campaign. The village is the original subscription plan — reactivate yours."}],
+ anchor:"Single-parenting concentrates weight that was engineered for a crew. Doing it alone isn't the badge of honor exhaustion says it is — it's just heavier. Somewhere on your bench are people who would say yes if you asked. The asking is the skill.",
+ prompts:["Where does the weight of doing this alone press hardest?","Who is already on my bench that I forget to call on?","What would I set up this month if I weren't embarrassed to need backup?"],
+ action:"Text one person today and set up one concrete backup arrangement — a school-run swap, an emergency contact, a standing check-in.",
+ reframe:"Asking for help is delegation, and delegation is CEO behavior."},
+{n:7,t:"Switch Off the Night Shift",w:[
+  {y:"Psalms",by:"Psalm 127:2 (KJV)",x:"It is vain for you to rise up early, to sit up late... for so he giveth his beloved sleep."},
+  {y:"Money Wisdom",by:"The money desk",x:"Nothing you scroll at midnight will improve tomorrow's balance. Tonight's sleep will improve tomorrow's decisions."},
+  {y:"Life Quote",by:"Dalai Lama",x:"Sleep is the best meditation."}],
+ anchor:"The house finally goes quiet and your mind clocks in for the night shift: replaying today, pricing tomorrow, drafting worst cases. But they call it beauty sleep for a reason — it's the one treatment on your shelf that repairs skin, mood, patience, and judgment at the same time, and it's free.",
+ prompts:["What does my mind reach for the moment the house goes quiet?","What is my last hour before bed actually made of?","What would a real night routine look like — for my brain, not just my face?"],
+ action:"Set a screen cutoff 30 minutes before bed tonight. Do the skincare slowly, then let the night have the rest.",
+ reframe:"Beauty sleep is literal. It's compound interest for the face and the mood."},
+{n:8,t:"Retire the Worry Shift",w:[
+  {y:"Life Quote",by:"Corrie ten Boom",x:"Worry does not empty tomorrow of its sorrow. It empties today of its strength."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Bondye bon — God is good; it works out in ways you cannot see yet."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"You've rehearsed the worst-case scenario enough times to star in it. Cancel the show; rehearse dinner instead."}],
+ anchor:"Worry feels like work because it's exhausting, but check the receipts: hours spent worrying this month versus what those hours actually changed. The return is terrible. You wouldn't keep a subscription with numbers like that.",
+ prompts:["Which worry keeps replaying on a loop, and how old is it?","What has this worry ever actually accomplished?","What is one thing I could DO today that would shrink the worry more than thinking about it would?"],
+ action:"Set a 15-minute 'worry window' today. Worries that show up outside it get written down and told to wait for the meeting.",
+ reframe:"Worry is not preparation. Preparation is preparation."},
+{n:9,t:"Control What's Yours",w:[
+  {y:"Psalms",by:"Psalm 46:10 (KJV)",x:"Be still, and know that I am God."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Dlo pa monte mòn — water does not climb the mountain."},
+  {y:"Money Wisdom",by:"The money desk",x:"You don't control the market. You control the deposit, the fees, and whether you panic. That's the whole job."}],
+ anchor:"Some things won't flow uphill no matter how hard you push — other people's choices, the job market's mood, last year's decisions. Meanwhile your actual column sits half-tended while you white-knuckle the rest. Today we sort the spreadsheet honestly.",
+ prompts:["What am I trying to control that has never once obeyed me?","What IS in my control today that I've been neglecting while I grip the rest?","What would 'letting the water flow downhill' look like in one stubborn area?"],
+ action:"Draw two columns: MINE and NOT MINE. Sort today's stressors honestly. Act only on the first column today.",
+ reframe:"I manage my column. The rest of the spreadsheet was never my account."},
+{n:10,t:"The Good-Enough Mom",w:[
+  {y:"Life Quote",by:"Toni Morrison",x:"You are your best thing."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"The bar you set for yourself was designed for a woman with a staff of twelve. Fire the committee that wrote it."},
+  {y:"Psalms",by:"Psalm 103:13-14 (KJV)",x:"Like as a father pitieth his children... For he knoweth our frame; he remembereth that we are dust."}],
+ anchor:"Mom guilt does math no accountant would sign: it counts every miss and expenses every win. Your kid is not keeping that ledger. They're keeping a different one — did she show up, did she laugh, did she come back after the hard moment. You're solvent on the ledger that counts.",
+ prompts:["Where did I set a bar for myself that no single mother in history has cleared?","What did I get RIGHT this week that I skipped past without credit?","What does 'good-enough mom' actually look like — described kindly?"],
+ action:"Repair one small thing (an apology, a redo, a hug) OR formally forgive yourself one miss this week. Write down which you chose.",
+ reframe:"A loved kid with a rested mom beats a perfect schedule with a ghost."},
+{n:11,t:"Comparison Detox",w:[
+  {y:"Life Quote",by:"Theodore Roosevelt",x:"Comparison is the thief of joy."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Kay koule twonpe solèy men li pa twonpe lapli — a leaky roof fools the sun, but it cannot fool the rain."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Her feed is a highlight reel with good lighting. You're comparing your bloopers to her trailer."}],
+ anchor:"You of all people know what a ring light, an angle, and thirty takes can do — you've made the magic yourself. So apply that literacy to lives, not just photos. Every 'she's so far ahead' post is a leaky roof that fools the sun. You have no idea what the rain knows.",
+ prompts:["Whose life do I scroll past and feel instantly behind — and what exactly am I imagining they have?","What timeline am I measuring myself against, and who published it?","What is one thing in MY life the highlight-reel version of me would post today?"],
+ action:"Mute or unfollow three accounts that make you feel behind. Follow one that teaches you something you want to learn.",
+ reframe:"I'm not behind. I'm on a different release schedule."},
+{n:12,t:"The Short Fuse",w:[
+  {y:"African Proverb",by:"African proverb",x:"No matter how hot your anger is, it cannot cook yams."},
+  {y:"Psalms",by:"Psalm 37:8 (KJV)",x:"Cease from anger, and forsake wrath: fret not thyself in any wise to do evil."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"The fuse isn't short because you're mean. It's short because you're at 4% battery. Charge the phone."}],
+ anchor:"The snap at bedtime, the sigh at the sink, the tone you promised yourself you wouldn't use — none of it means you're a bad mom. It means the tank is empty and the alarm is working. You don't need more guilt; you need a cool-down ritual and an earlier bedtime.",
+ prompts:["What predictably lights my fuse — and what state am I usually in when it does?","What does my kid see in the five seconds after I snap?","What would help me catch the spark before it becomes the fire?"],
+ action:"Choose your official cool-down ritual — ten breaths, walk to the kitchen, count backward from 20 — and run it BEFORE responding hot today.",
+ reframe:"A pause is not weakness. It's the moment the queen checks the board."},
+{n:13,t:"Audit the Script",w:[
+  {y:"Life Quote",by:"Eleanor Roosevelt",x:"No one can make you feel inferior without your consent."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Pale franse pa di lespri — speaking fancy does not make it smart."},
+  {y:"Psalms",by:"Psalm 19:14 (KJV)",x:"Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O LORD."}],
+ anchor:"Exhaustion writes bossy scripts: 'I'm behind.' 'I can't afford to rest.' 'Everyone else has it together.' The voice sounds official — it always does — but official-sounding is not the same as true. A thought is a first draft, and you're allowed to edit drafts.",
+ prompts:["What sentence repeats in my head on hard days?","Is that sentence true, useful, and would I ever say it to my daughter or my best friend?","What fairer, still-honest sentence could take its shift?"],
+ action:"Catch one automatic thought today, write it down, and write the fairer second draft next to it.",
+ reframe:"A thought is a first draft. I edit drafts for a living now."},
+{n:14,t:"Enough for Today",w:[
+  {y:"Psalms",by:"Psalm 68:19 (KJV)",x:"Blessed be the Lord, who daily loadeth us with benefits."},
+  {y:"Money Wisdom",by:"The money desk",x:"Budget this month, not your whole imagined future. Today's bread today; tomorrow's math after coffee."},
+  {y:"Life Quote",by:"Maya Angelou",x:"I've learned that making a living is not the same thing as making a life."}],
+ anchor:"The finish line keeps moving because you never wrote down where it was. 'More' is not a plan; it's a treadmill with cuter shoes. Today's assignment is a one-day-at-a-time economy: what does enough for THIS month actually cost, in real numbers?",
+ prompts:["Which future expense am I pre-suffering today?","What does 'enough for this month' actually cost, in real numbers?","If I hit my number and still felt anxious, what would that tell me?"],
+ action:"Make one one-day-sized money decision today, and write down your 'enough' number for this month. Just this month.",
+ reframe:"Enough is a number, not a feeling. I wrote mine down."},
+{n:15,t:"The Long Game",w:[
+  {y:"Money Wisdom",by:"Benjamin Franklin",x:"Money makes money. And the money that money makes, makes money."},
+  {y:"African Proverb",by:"African proverb",x:"The best time to plant a tree was twenty years ago. The second-best time is now."},
+  {y:"Psalms",by:"Psalm 1:3 (KJV)",x:"And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season."}],
+ anchor:"Here's the novice-investor secret nobody gates: you don't need to be brilliant, you need to be early-ish and consistent. Small deposits, left alone, doing quiet math for decades — that's the whole magic trick. Motherhood compounds the same way. So does a career. Plant the tree today.",
+ prompts:["Where am I demanding sprint results from a compounding process?","What small deposit — money, skills, or minutes with my kid — am I most consistent with?","What would 'thinking in decades' change about this week?"],
+ action:"Automate one deposit today, however small — even $10 on payday counts. Consistency is the strategy, not the amount.",
+ reframe:"Small, boring, and automatic is how empires actually get built."},
+{n:16,t:"Move for Your Mood",w:[
+  {y:"Life Quote",by:"Jim Rohn",x:"Take care of your body. It's the only place you have to live."},
+  {y:"African Proverb",by:"African proverb",x:"By crawling a child learns to stand."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"You don't need a two-hour gym era. You need twenty minutes that changes tonight's mood."}],
+ anchor:"Twenty minutes of movement is one of the best-documented mood treatments that doesn't need a prescription or a cute outfit. This isn't about the summer body or the before-and-after — it's about who shows up at dinner: the snappy version or the one who got her blood moving.",
+ prompts:["How does my mood differ on days I move versus days I don't?","What movement did I actually enjoy before it became about how I look?","What is the smallest version of movement I would really do today?"],
+ action:"Do a 20-minute mood-first session today: a walk, a dance playlist, a follow-along video. Train for how you want to feel at bedtime.",
+ reframe:"I move for tonight's mood, not for a before-and-after."},
+{n:17,t:"Stay Curious",w:[
+  {y:"Money Wisdom",by:"Benjamin Franklin",x:"An investment in knowledge pays the best interest."},
+  {y:"African Proverb",by:"African proverb",x:"Knowledge is like a garden: if it is not cultivated, it cannot be harvested."},
+  {y:"Psalms",by:"Psalm 90:12 (KJV)",x:"So teach us to number our days, that we may apply our hearts unto wisdom."}],
+ anchor:"Skills compound exactly like money: fifteen minutes a day, invested in something you're curious about, quietly turns into a career asset no layoff can repossess. You don't need the degree to start — you need the next lesson, and lessons are free now.",
+ prompts:["What skill would change my career math if I gave it 15 minutes a day?","When did I last learn something purely because it lit me up?","What am I curious about that I keep dismissing as 'not practical'?"],
+ action:"Spend 15 minutes today on one career skill or investing lesson — a free course module, a tutorial, one chapter.",
+ reframe:"Every skill I learn is a deposit no market crash can take."},
+{n:18,t:"Your Girls Are Medicine",w:[
+  {y:"African Proverb",by:"African proverb",x:"If you want to go fast, go alone. If you want to go far, go together."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Yon sèl dwèt pa manje kalalou — one finger cannot eat okra."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Girlfriend time isn't a luxury line item. It's preventive care with better outfits."}],
+ anchor:"The group chat that makes you cry laughing is not a distraction from your real life — it's infrastructure. Friendships die of scheduling, not conflict, and 'we should get together' is where they go to fade. Somebody has to put a date on it. Be the one.",
+ prompts:["Which friend have I lost to scheduling, not to any falling-out?","What do my girls give me that nothing else on my calendar does?","What's stopping me from being the one who organizes the thing?"],
+ action:"Text the group chat today and put one girls' hangout on the calendar — coffee counts, a walk counts. The trip can come later; the date comes now.",
+ reframe:"Friendships die of scheduling, not conflict. Mine get calendar slots."},
+{n:19,t:"Play Is Not a Luxury",w:[
+  {y:"Psalms",by:"Psalm 118:24 (KJV)",x:"This is the day which the LORD hath made; we will rejoice and be glad in it."},
+  {y:"Life Quote",by:"George Bernard Shaw",x:"We don't stop playing because we grow old; we grow old because we stop playing."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Thirty minutes on the floor playing beats three hours of supervised scheduling. Ask any kid."}],
+ anchor:"Play looks unproductive on paper, which is exactly why exhausted providers cut it first — and exactly why it works. Your kid doesn't want the itinerary version of you. They want the one who gets on the floor, loses at the game, and doesn't check her phone once.",
+ prompts:["When did I last play — actually play, not supervise?","What did I love to do at my kid's age?","What would 30 phone-free minutes of play cost me today — and what would it buy?"],
+ action:"Thirty minutes of play today. Kid picks the game. Phone lives in another room. You are all-in.",
+ reframe:"Play is skincare for the spirit."},
+{n:20,t:"Joy on Purpose",w:[
+  {y:"Psalms",by:"Psalm 30:5 (KJV)",x:"Weeping may endure for a night, but joy cometh in the morning."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Lespwa fè viv — hope makes us live."},
+  {y:"Life Quote",by:"Dolly Parton",x:"Find out who you are and do it on purpose."}],
+ anchor:"Burnout narrows life to tasks; joy widens the room again. Joy is not the thing you earn after the career launches and the accounts grow — it's the fuel that gets you there. Schedule it like it matters, because it does.",
+ prompts:["What small thing brought me real joy this week that I almost didn't notice?","Where did duty quietly crowd out delight in our house?","What free or nearly-free joy could become a weekly ritual for us?"],
+ action:"Do one completely unnecessary joyful thing today: kitchen dancing, dessert before dinner, the ridiculous walk. File under 'essential.'",
+ reframe:"Joy is not a reward for finishing. It's fuel for continuing."},
+{n:21,t:"The Career Question",w:[
+  {y:"Life Quote",by:"Shirley Chisholm",x:"If they don't give you a seat at the table, bring a folding chair."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Chita pa bay — sitting still yields nothing."},
+  {y:"Money Wisdom",by:"The money desk",x:"Your earning power is your biggest asset — bigger than any stock you will ever pick. Invest there first."}],
+ anchor:"Starting a career while raising a human alone is not 'late' — it's advanced-level difficulty, and you're already playing it. The gap between where you are and where you want to be is not a verdict; it's a to-do list, and to-do lists shrink one brave item at a time.",
+ prompts:["What career do I actually want — not the one I've settled for imagining?","What is the smallest brave step I could take this week: an application, a course, a conversation?","Who is already doing what I want to do, and what's stopping me from asking her about it?"],
+ action:"Make one concrete career move today: send the application, book the informational chat, or finish one course module.",
+ reframe:"I'm not starting from scratch. I'm starting from experience."},
+{n:22,t:"Ask for More",w:[
+  {y:"African Proverb",by:"African proverb",x:"Until the lion learns how to write, every story will glorify the hunter."},
+  {y:"Psalms",by:"Psalm 81:10 (KJV)",x:"Open thy mouth wide, and I will fill it."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Closed mouths don't get raises, refunds, or respite. Practice the ask in that mirror you love so much."}],
+ anchor:"Nobody is coming to offer you the rate, the discount, the flexible schedule, or the babysitting swap — not because they're cruel, but because they can't hear what you haven't said. The ask feels enormous in your head and takes eleven seconds out loud.",
+ prompts:["What have I been wanting that I've never actually asked for out loud?","What do I imagine happens if I ask — and how likely is that, really?","Where did I learn that asking was rude, needy, or dangerous?"],
+ action:"Make one real ask today: a rate, a discount, a deadline, a favor, a swap. Eleven seconds. Time it.",
+ reframe:"Asking is not begging. It's negotiating, and queens negotiate."},
+{n:23,t:"Simplify the Load",w:[
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Apre dans, tanbou lou — after the dance, the drum is heavy."},
+  {y:"Life Quote",by:"Lin Yutang",x:"Besides the noble art of getting things done, there is the noble art of leaving things undone."},
+  {y:"Money Wisdom",by:"The money desk",x:"Every subscription, obligation, and 'quick favor' is a line item. Audit your energy budget like you audit the money."}],
+ anchor:"Everything you carry costs something after the music stops. The obligations you said yes to in March are still billing you in July. Today is an audit day: not adding better habits — subtracting dead weight. Subtraction is the most underrated form of progress.",
+ prompts:["What am I still carrying that stopped serving me months ago?","Which yes am I paying for weekly that deserved to be a no?","If I dropped three things tomorrow, what would actually happen?"],
+ action:"Cancel, pause, or delegate three things today: one digital, one social, one household. Watch the world keep spinning.",
+ reframe:"Subtraction is also progress."},
+{n:24,t:"Boundaries Are Beauty Sleep",w:[
+  {y:"African Proverb",by:"African proverb",x:"When there is no enemy within, the enemies outside cannot hurt you."},
+  {y:"Psalms",by:"Psalm 16:6 (KJV)",x:"The lines are fallen unto me in pleasant places; yea, I have a goodly heritage."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"'No' is a complete sentence. 'No, but thank you for thinking of me' is a complete sentence with lip gloss."}],
+ anchor:"A boundary is not a wall; it's a property line, and property lines are how you keep the garden alive. Every drained, resentful yes was a no you swallowed. The people worth keeping will survive your limits — and the ones who won't were billing you anyway.",
+ prompts:["Where have I been emotionally available beyond my actual capacity?","Which recurring request needs a calm, permanent no?","What am I afraid happens to me if I disappoint someone — and has it ever actually happened?"],
+ action:"Deliver one calm no this week, without a courtroom defense attached. Practice the sentence out loud first.",
+ reframe:"Every no to the wrong thing is a yes with better skin."},
+{n:25,t:"Count the Wins",w:[
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Sonje lapli ki leve mayi ou — remember the rain that grew your corn."},
+  {y:"Psalms",by:"Psalm 103:2 (KJV)",x:"Bless the LORD, O my soul, and forget not all his benefits."},
+  {y:"Life Quote",by:"Oprah Winfrey",x:"Be thankful for what you have; you'll end up having more."}],
+ anchor:"Your brain has a filing error: losses get framed and hung on the wall, wins go straight to the shredder. Gratitude is the audit that corrects the books. You kept a human alive this week, showed up on empty, and still moisturized. Those are assets. Count them.",
+ prompts:["What small grace did I almost miss this week?","What did I survive this year that I never gave myself credit for?","What gratitude feels honest right now — not forced, not performed?"],
+ action:"Write three tiny thank-yous today: one for your body, one for your kid, one for something money-related — however small.",
+ reframe:"Gratitude is the audit that always finds assets."},
+{n:26,t:"Pay Yourself First",w:[
+  {y:"Money Wisdom",by:"Warren Buffett",x:"Do not save what is left after spending, but spend what is left after saving."},
+  {y:"African Proverb",by:"African proverb",x:"Tomorrow belongs to the people who prepare for it today."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"You budget snacks, uniforms, and birthday gifts to the dollar. Put YOUR name in the budget too — first, not last."}],
+ anchor:"Here's the whole strategy, novice to knight in one move: the transfer happens on payday, automatically, before the spending starts — emergency fund first, then investing. Not what's left over at the end of the month, because you already know what's left over at the end of the month.",
+ prompts:["Who gets paid out of my paycheck before I do — list them honestly?","What amount could leave my checking on payday without breaking the month?","What would having a real emergency fund change about how I sleep?"],
+ action:"Set up or increase one automatic transfer scheduled for payday — savings or investing, any amount. Automation beats motivation.",
+ reframe:"I am a line item in my own budget — the first one."},
+{n:27,t:"Dress for the Life You're Building",w:[
+  {y:"Life Quote",by:"Coco Chanel",x:"Beauty begins the moment you decide to be yourself."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Fanm se kajou: plis li vye, plis li bon — a woman is mahogany; the older, the finer."},
+  {y:"Psalms",by:"Psalm 34:5 (KJV)",x:"They looked unto him, and were lightened: and their faces were not ashamed."}],
+ anchor:"There are two ways to beat a face: as a celebration and as a costume. One fills you; one hides you. The baddie is real — keep her — but she's allowed days off. Today, notice which one you're doing, with zero judgment either way. The glow that doesn't rinse off comes from rest, joy, and being known.",
+ prompts:["When does getting ready feel like joy, and when does it feel like armor?","Who am I dressing for on my hardest days?","What would showing up fully as myself look like this week — glammed or bare-faced?"],
+ action:"Do one of these today, whichever is braver for YOU: full glam for absolutely nobody, or the bare-faced errand run. Notice how it feels.",
+ reframe:"The face card never declines — and it's still allowed a day off."},
+{n:28,t:"The Trip Is Allowed",w:[
+  {y:"African Proverb",by:"Moorish proverb",x:"He who does not travel will not know the value of men."},
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Dèyè mòn, gen mòn — behind mountains, there are more mountains."},
+  {y:"Money Wisdom",by:"The money desk",x:"A girls' trip is a budget line, not a moral failing. Twenty-five dollars a week is a passport stamp by spring."}],
+ anchor:"There is more world behind the mountain, and wanting to see it with your girls is not irresponsible — it's a savings goal with sunscreen. Fund it in pieces, in the open, next to the emergency fund, not instead of it. Trips planned guilt-free get taken; trips planned guiltily get canceled.",
+ prompts:["Where would we go if the group chat actually committed?","What does the trip represent to me — escape, celebration, proof, or rest?","What tiny weekly amount could fund it without touching the safety net?"],
+ action:"Open a trip fund today — a labeled savings bucket counts — name the destination, schedule the first small transfer, and drop the date poll in the group chat.",
+ reframe:"The trip is not a betrayal of the plan. It's proof the plan is working."},
+{n:29,t:"Write the Vision",w:[
+  {y:"Haitian Proverb",by:"Haitian proverb",x:"Kreyon Bondye pa gen gòm — God's pencil has no eraser."},
+  {y:"Life Quote",by:"Mary Oliver",x:"Tell me, what is it you plan to do with your one wild and precious life?"},
+  {y:"Money Wisdom",by:"The money desk",x:"A vision without numbers is a vibe. Add three: the savings target, the income goal, and the date."}],
+ anchor:"Burnout predicts the future by photocopying the past — more of the same, forever. Refuse the photocopier. Twelve months from now is being drafted right now, by the small deposits: the course modules, the automatic transfers, the bedtimes, the asks. Write the version you're actually building toward.",
+ prompts:["What do I want to be true twelve months from now — career, money, my kid, my joy?","Which current habit is quietly voting against that vision?","What three numbers would make this vision real instead of a vibe?"],
+ action:"Write a one-paragraph vision for twelve months out — then attach three numbers: a savings target, an income goal, and a date.",
+ reframe:"I don't chase the life. I build it — deposit by deposit, day by day."},
+{n:30,t:"Crown On, Tank Full",w:[
+  {y:"African Proverb",by:"African proverb",x:"Smooth seas do not make skillful sailors."},
+  {y:"Psalms",by:"Psalm 28:7 (KJV)",x:"The LORD is my strength and my shield; my heart trusted in him, and I am helped."},
+  {y:"Mom Coaching",by:"Mama's corner",x:"Maintenance beats makeover. Ask your skincare shelf — it's been telling you this for years."}],
+ anchor:"Thirty days didn't fix everything; that was never the assignment. What you built is a maintenance routine for a whole life: notice earlier, ask sooner, rest without a permission slip, face the numbers, keep the group chat warm. The crown was never the prize for burning out — it fits better on a rested head.",
+ prompts:["What changed in me over these 30 days?","What are my early-warning lights for running on empty?","Which three practices carry into the next 90 days?"],
+ action:"Write your maintenance plan: one daily practice, one weekly boundary, one monthly money check-in. Post it where the mirror can see it.",
+ reframe:"The crown fits better on a rested head."}
+];
+
+const PILLARS = ["Meditation","Physical Fitness","Learning","Family Connection","CBT Skill"];
+const PILLAR_ICON = {Meditation:"🧘🏽‍♀️", "Physical Fitness":"💪", Learning:"📚", "Family Connection":"💞", "CBT Skill":"🧠"};
+const RESTORE = {
+"Meditation":[
+"Box breathing: inhale 4, hold 4, exhale 4, hold 4 — five rounds, shoulders down from your ears.",
+"Five-minute body scan, crown to toes. Unclench the jaw that's been holding the whole week.",
+"Mindful skincare: tonight's routine with no phone propped up. Warm water, product, breath — a facial for the nervous system.",
+"4-7-8 breathing at lights-out: inhale 4, hold 7, exhale 8. Four rounds, then hand the night over.",
+"One-song sit: one slow track, eyes closed, just listening. No captions, no multitasking.",
+"Walking meditation: ten unhurried minutes, steps matching breath. Leave the earbuds home.",
+"Ten slow breaths before opening any banking or investing app — every single time today.",
+"Two-minute doorway pause between work mode and mom mode. Arrive before you walk in.",
+"Gratitude breath: inhale 'I have,' exhale 'enough.' Ten rounds. Yes, even about money.",
+"Mirror minute: sixty seconds looking at yourself with the kindness you give your best friend. No fixing, no critique.",
+"Loving-kindness, three minutes: wish yourself well, your kid well, and one difficult person well. In that order.",
+"Five minutes of silence in a parked car. No podcast, no list-making. Just park and be."],
+"Physical Fitness":[
+"Twenty-minute walk today at 'phone in pocket' pace. Sunlight if you can get it.",
+"Kitchen dance break: three songs, full commitment. Your kid can DJ.",
+"Five minutes of stretching before bed — hips and neck first; they're holding your week.",
+"Bodyweight basics: two rounds of 10 squats, 10 wall push-ups, a 20-second plank. That counts.",
+"Take the stairs every time today, and notice your legs getting you there.",
+"Ten-minute walk after your biggest meal. Blood sugar, mood, and sleep all say thank you.",
+"Hydration audit: fill the cute bottle, keep it visible all day, refill at lunch.",
+"Posture reset five times today: crown lifted, shoulders back, breathe into the belly.",
+"One 15-minute follow-along workout video. Beginner is a level, not an apology.",
+"Deliberate easy day: move only at conversation pace. Recovery is part of training.",
+"Morning light walk: ten minutes outside before the scroll. It sets the whole day's clock.",
+"At bedtime, thank your body for two things it did today. Out loud is allowed."],
+"Learning":[
+"Read one plain-English explainer on index funds. No action required — just understand one idea.",
+"Play with a compound-interest calculator for ten minutes. Watch what $50 a month becomes in 20 years.",
+"One podcast episode on money basics during a commute, a walk, or wash day.",
+"Read ten pages of anything that is not a feed.",
+"Learn five words in the language of your dream girls'-trip destination.",
+"Fifteen minutes on one career skill — a free course module, a tutorial, a how-to.",
+"Update one line of your résumé or LinkedIn. One line. Today.",
+"Teach your kid one small money lesson — saving jars, needs vs wants — and notice what it teaches you.",
+"Look up one thinking bias — loss aversion, anchoring, catastrophizing — then catch it in the wild today.",
+"Read about one woman who started her career or business later than planned. Borrow her nerve.",
+"Learn what an emergency fund actually is and where people keep one. Just the facts today.",
+"Research one girls'-trip destination; save one fact to drop in the group chat tonight."],
+"Family Connection":[
+"Twenty minutes one-on-one with your kid, phones in another room. Full attention is the flex.",
+"Call the family member you keep meaning to call. Five minutes counts.",
+"Text a friend one honest sentence about your week. Not 'all good.' The real one.",
+"Drop a date poll in the girls' group chat. Someone has to start the trip — be the one.",
+"Write your kid a two-line note and hide it where they'll find it.",
+"Ask another mom how she's really doing — then actually listen to the answer.",
+"Put one hangout on the calendar like it's a client meeting, because it is.",
+"Family dance party or game night: 30 minutes, everybody plays, nobody wins gracefully.",
+"Ask someone for one small, specific favor. Receiving is a skill; yours needs reps.",
+"Say one worry out loud to someone safe. Spoken worries shrink; hidden ones compound.",
+"Thank one person today, specifically, for one specific thing they did.",
+"Set up one concrete backup arrangement: a school-run swap, an emergency contact, a standing check-in."],
+"CBT Skill":[
+"Thought record: situation → automatic thought → feeling → evidence for → evidence against → fairer thought.",
+"Name today's distortion when it shows up — catastrophizing, mind-reading, all-or-nothing. Label it like a species.",
+"Worry window: 15 scheduled minutes. Outside the window, worries get written down and told to wait.",
+"Ask: 'What would I tell my best friend if she said this about herself?' Then take your own advice.",
+"Money fear on paper: best case, worst case, most likely case. Circle 'most likely.' Breathe.",
+"Behavioral activation: schedule one pleasant thing and do it whether or not you feel like it. Mood follows action.",
+"5-4-3-2-1 grounding: five things you see, four you feel, three you hear, two you smell, one you taste.",
+"Cost-benefit the rule 'I can't rest until everything is handled.' Write what that rule charges you per week.",
+"Downward arrow: 'If that happened, what would it mean?' Ask it three times. Look at what's at the bottom.",
+"List the evidence for and against 'I'm behind in life.' Include what your timeline actually required of you.",
+"Find one genuinely absurd thing today and laugh at it on purpose. Humor is licensed reappraisal.",
+"Do the opposite: when the urge to push through hits, rest ten minutes. Observe the world not ending."],
+};
+
+/* ---- 12 round themes: the year-long arc ---- */
+const THEMES = [
+["Tell the Truth","An honest baseline: where the tank actually is."],
+["Lighten the Load","Humor, subtraction, and dropped weights."],
+["Body & Glow","Sleep, movement, and care below the surface."],
+["Money Peace","Facts over fear — the novice era, owned."],
+["Present Mom","Minutes of full attention over grand gestures."],
+["The Long Game","Compound interest in money, skills, and mothering."],
+["Play & Wander","Joy, girl trips, and lightness."],
+["Your People","The village as a discipline."],
+["Brave Moves","Career courage and bigger asks."],
+["Simplify","Fewer tabs, clearer head."],
+["Count the Wins","Gratitude, enough, and abundance."],
+["Legacy","Vision, wealth, and what compounds."]
+];
+
+const WEEKS = {
+  w1:{title:"Week 1 Debrief: Tell the Truth",after:7,qs:["What did I learn about my exhaustion this week?","Which restore practice actually helped?","What needs protecting next week?"]},
+  w2:{title:"Week 2 Debrief: Put It Down",after:14,qs:["What weight did I set down — or still need to?","Where did I ask for help, or dodge asking?","What is worry actually costing me per week — in hours, sleep, and patience?"]},
+  w3:{title:"Week 3 Debrief: Rebuild the Rhythm",after:21,qs:["Which rhythm gave me the most steadiness?","Sleep, movement, money check-ins, my people — which one needs attention next?","What boundary should become boring and normal instead of dramatic?"]},
+  w4:{title:"Closing Debrief: Sustain the Glow",after:30,qs:["What changed in me over these 30 days?","What are my early-warning lights for running on empty?","Which three practices carry into the next 90 days?"]}
+};
+const SCORECARD = ["Rest","Confidence","Energy","Money peace","Joy"];
+const BASELINE_ITEMS = ["Emotional exhaustion","Irritability or snappiness","Mom guilt","Money anxiety","Career doubt","Sleep debt","Physical fatigue","Comparison spiral","The 'it's all on me' feeling","Trouble switching off at night"];
+const NOTICES = ["Tight jaw or shoulders","Racing mind","Money loop replaying","Comparison scroll","A real laugh","A moment of calm"];
+const MICRO = [
+  ["Body","Water, protein, movement, and guarded sleep — the glow-up from the inside."],
+  ["Mind","One thought caught, checked, and reframed — the CBT rep of the day."],
+  ["Money","One fact faced, one small automatic deposit, zero doom-checking the balance."],
+  ["Motherhood","Minutes of full attention beat hours of half attention."],
+  ["Play","Laugh daily, fund the trip in pieces, and keep the group chat alive."]
+];
+const PHASE = n => n<=7 ? "Days 1–7 · Stabilize" : n<=14 ? "Days 8–14 · Release" : n<=21 ? "Days 15–21 · Rebuild" : "Days 22–30 · Sustain";
+
+/* rotation helpers — this is what makes each round read differently */
+function wisdomFor(d){ return d.w[(store.currentRound-1) % d.w.length]; }
+function restoreFor(n){
+  const pillar = PILLARS[(n-1)%PILLARS.length];
+  return {pillar, text: RESTORE[pillar][(store.currentRound-1) % 12]};
+}
+function themeFor(r){ return THEMES[((r ?? store.currentRound)-1) % 12]; }
+
+/* page order: home, baseline, d1..d7, w1, d8..d14, w2, d15..d21, w3, d22..d30, w4 */
+const ORDER = ["cover","home","baseline"];
+for(let i=1;i<=30;i++){ ORDER.push("d"+i); if(i===7)ORDER.push("w1"); if(i===14)ORDER.push("w2"); if(i===21)ORDER.push("w3"); if(i===30)ORDER.push("w4"); }
+ORDER.push("cards","notes");
+
+/* ============================== STORAGE ============================== */
+const STORE_KEY = "burnoutJournal.her.v1";
+let store = load();
+function load(){
+  try{ const raw = localStorage.getItem(STORE_KEY); if(raw) return JSON.parse(raw); }catch(e){}
+  return { currentRound:1, currentPage:"cover", rounds:{} };
+}
+let saveTimer=null;
+function save(showBadge=true){
+  localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  if(showBadge){
+    const b=document.getElementById("saveBadge");
+    b.classList.add("show");
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>b.classList.remove("show"),1400);
+  }
+}
+function roundData(r){
+  r = r ?? store.currentRound;
+  if(!store.rounds[r]) store.rounds[r] = {startDate:null, pages:{}};
+  return store.rounds[r];
+}
+function pageData(pid){
+  const rd = roundData();
+  if(!rd.pages[pid]) rd.pages[pid] = {};
+  return rd.pages[pid];
+}
+function getVal(pid,key,fallback=""){ const p=roundData().pages[pid]; return p && key in p ? p[key] : fallback; }
+function setVal(pid,key,val){
+  const rd = roundData();
+  if(!rd.pages[pid]) rd.pages[pid]={};
+  rd.pages[pid][key]=val;
+  if(!rd.startDate) rd.startDate = new Date().toISOString().slice(0,10);
+  save();
+  refreshNavMarks();
+}
+function pageHasData(pid,r){
+  const rd = store.rounds[r ?? store.currentRound];
+  if(!rd || !rd.pages[pid]) return false;
+  return Object.values(rd.pages[pid]).some(v => v!=="" && v!==false && v!==null && v!==undefined);
+}
+
+/* ============================== RENDER HELPERS ============================== */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function ta(pid,key,placeholder,minH){
+  return `<textarea data-pid="${pid}" data-key="${key}" placeholder="${esc(placeholder)}" ${minH?`style="min-height:${minH}px"`:""}>${esc(getVal(pid,key))}</textarea>`;
+}
+function txt(pid,key,placeholder,width){
+  return `<input type="text" data-pid="${pid}" data-key="${key}" placeholder="${esc(placeholder)}" value="${esc(getVal(pid,key))}" ${width?`style="min-width:${width}px"`:""}>`;
+}
+function slider(pid,key,label){
+  const v = getVal(pid,key,0);
+  return `<div class="sliderrow"><span class="slabel">${esc(label)}</span>
+    <input type="range" min="0" max="10" step="1" value="${v}" data-pid="${pid}" data-key="${key}">
+    <span class="sval">${v}</span></div>`;
+}
+function chip(pid,key,label){
+  const on = getVal(pid,key,false)===true;
+  return `<label class="chip ${on?"on":""}"><input type="checkbox" data-pid="${pid}" data-key="${key}" ${on?"checked":""}><span class="dot"></span>${esc(label)}</label>`;
+}
+function bigcheck(pid,key,label){
+  const on = getVal(pid,key,false)===true;
+  return `<label class="bigcheck ${on?"on":""}"><input type="checkbox" data-pid="${pid}" data-key="${key}" ${on?"checked":""}>${esc(label)}</label>`;
+}
+
+/* ============================== PAGE TEMPLATES ============================== */
+function renderCover(){
+  return `
+    <div class="coverhero"><img src="her-cover.jpg" alt="Restore Her cover art — a woman meditating at golden hour among tropical flowers, with her journal, laptop, gold coins, sneakers, and a photo of her child"></div>
+    <div class="covertitle">
+      <h2>Rest, Restore, Recover</h2>
+      <div class="coversub">A 30-Day Reset · For the Mom Building It All</div>
+      <div class="coverline">Wisdom · money peace · girl trips · a full tank</div>
+      <button class="beginbtn" onclick="goTo('home')">Begin ✨</button>
+    </div>`;
+}
+
+function renderHome(){
+  const roundsHtml = Array.from({length:12},(_,i)=>{
+    const r=i+1, rd=store.rounds[r], th=themeFor(r);
+    const done = rd ? ORDER.filter(p=>p.startsWith("d")&&pageHasData(p,r)).length : 0;
+    const started = rd && rd.startDate ? new Date(rd.startDate+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"}) : "not started";
+    return `<div class="roundcard ${r===store.currentRound?"current":""}" onclick="switchRound(${r})">
+      <div class="rname">Round ${r}</div><div class="rtheme">${esc(th[0])}</div><div class="rmeta">${started}</div>
+      <div class="bar"><i style="width:${Math.round(done/30*100)}%"></i></div>
+      <div class="rmeta">${done} / 30 days</div></div>`;
+  }).join("");
+  const th = themeFor();
+  return `
+    <h2 class="pagetitle">Rest, Restore, Recover</h2>
+    <div class="pagesub">Wisdom, honest check-ins, boundaries, and renewal for the mom who does too much · Rose-gold edition</div>
+
+    <div class="block"><div class="blocklabel">👑 Start Here</div>
+      <p style="font-size:14.5px;margin:6px 0;">This journal was built for the single mom whose brows are always done but whose battery is always at 4% — building a career from the ground up, learning the money game as she goes, dreaming of girl trips she keeps postponing, and treating every day like a final exam. It swaps sermons for a daily shot of wisdom — life quotes, African proverbs, biblical Psalms, Haitian proverbs, mom coaching, and business & investing guidance — plus one restore practice a day drawn from meditation, physical fitness, learning, family connection, and CBT. It is allowed to be funny in here. That's a feature.</p>
+    </div>
+
+    <div class="block"><div class="blocklabel">🔄 This Round's Focus: ${esc(th[0])}</div>
+      <div class="anchor">${esc(th[1])} <b>Every round rotates its content:</b> each day carries three different pieces of wisdom (shown one per round), and every restore practice changes monthly on a 12-round cycle. Round ${store.currentRound} is a different journal than Round ${store.currentRound===12?1:store.currentRound+1} will be.</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">📖 How to Use It</div>
+      <ol class="howto">
+        <li>Read the day's wisdom slowly. Twice if it stings.</li>
+        <li>Do the check-in honestly. Nobody is watching, and lying to a journal is a strange hobby.</li>
+        <li>Answer at least one prompt. More is welcome; honesty is the goal.</li>
+        <li>Do the small recovery action and the restore practice. Tiny reps done consistently beat grand plans done twice.</li>
+        <li>Close with the reframe — say it like you mean it, even if you don't yet.</li>
+      </ol>
+    </div>
+
+    <div class="block"><div class="blocklabel">⚙️ Daily Micro-Practices</div>
+      ${MICRO.map(m=>`<div class="microrow"><b>${esc(m[0])}:</b> ${esc(m[1])}</div>`).join("")}
+    </div>
+
+    <div class="block"><div class="blocklabel">✍️ Opening Commitment</div>
+      <div class="reframebox">For the next 30 days I will tell the truth about my tank, treat recovery as part of the glow-up, face numbers instead of fearing them, ask for backup before I'm drowning, and take at least one thing per day far less seriously. — Signed, The CEO of this household.</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">🗺️ The 30-Day Recovery Map</div>
+      <div class="mapgrid">
+        <div class="maprow"><b>Days 1–7 · Stabilize</b> Tell the truth about the tank: rest, sleep, body, numbers.</div>
+        <div class="maprow"><b>Days 8–14 · Release</b> Put down worry, control, perfectionism, comparison, and old regrets.</div>
+        <div class="maprow"><b>Days 15–21 · Rebuild</b> Renew the thinking, the money rhythm, the movement, the people.</div>
+        <div class="maprow"><b>Days 22–30 · Sustain</b> Recover joy, cut the drag, feed the wanderlust, write the vision.</div>
+      </div>
+    </div>
+
+    <div class="block"><div class="blocklabel">📏 Ground Rule</div>
+      <div class="anchor">You do not have to earn rest by collapsing first. You can be the whole village some days, raise your kid, build the career, grow the coins, and still have limits. <b>Limits are not weakness; they are load management.</b> Miss a day? Continue. No shame spirals — this is a journal, not a group-chat receipt.</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">📅 Your Year — 12 rounds, 12 themes, rotating wisdom</div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:4px 0 10px;">Finish a round, start the next. Each round keeps its own entries AND serves different wisdom and practices, so the year never repeats itself. Tap a round to open it.</p>
+      <div class="roundsgrid">${roundsHtml}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">ℹ️ Fine Print (the honest kind)</div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0;">This journal supports reflection and healthy routines. It is not medical, mental-health, or financial advice — the money wisdom here is general principle, not a recommendation to buy or sell anything. Deep exhaustion can overlap with depression, anxiety, and sleep deprivation; if symptoms are intense, persistent, or safety-related, bring in a licensed professional. Asking for that help is a strength move, full stop.</p>
+    </div>`;
+}
+
+function renderBaseline(){
+  const pid="baseline";
+  return `
+    <span class="phase">Before Day 1</span>
+    <h2 class="pagetitle">Baseline Check-In: Where I'm Starting</h2>
+    <div class="pagesub">A private self-check, not a diagnosis. Rate each area from 0 to 10 today. 0 means "not present"; 10 means "loud and hard to ignore."</div>
+    <div class="block">${BASELINE_ITEMS.map((it,i)=>slider(pid,"b"+i,it)).join("")}</div>
+    <div class="block"><div class="blocklabel">🤝 Personal Recovery Contract</div>
+      <div class="anchor">For the next 30 days, I will practice honesty without shame, rest without apology, humor without guilt, and boundaries without a lengthy legal defense.</div>
+    </div>
+    <div class="block"><div class="blocklabel">🎯 My reason for doing this</div>${ta(pid,"reason","Write your reason here — a name usually shows up in it…",60)}</div>`;
+}
+
+function renderDay(n){
+  const d = DAYS[n-1], pid = "d"+n;
+  const dateVal = getVal(pid,"date","");
+  const v = wisdomFor(d);
+  const rp = restoreFor(n);
+  const setNo = (store.currentRound-1)%3+1;
+  return `
+    <span class="phase">${PHASE(n)}</span><span class="roundtag">Round ${store.currentRound} · ${esc(themeFor()[0])}</span>
+    <h2 class="pagetitle">Day ${String(n).padStart(2,"0")} — ${esc(d.t)}</h2>
+    <div class="pagesub">Daily Recovery Page · <label>Date: <input type="date" data-pid="${pid}" data-key="date" value="${esc(dateVal)}"></label></div>
+
+    <div class="block"><div class="blocklabel">🪙 Today's Wisdom <span class="wtype">${esc(v.y)}</span></div>
+      <div class="wisdom"><div class="wtext">“${esc(v.x)}”</div>
+        <div class="wby">— ${esc(v.by)}</div>
+        <div class="wnote">Rotates every round · showing set ${setNo} of 3 — switch rounds and this page changes.</div></div>
+    </div>
+
+    <div class="block"><div class="blocklabel">🔎 Real-Life Check</div>
+      <div class="anchor">${esc(d.anchor)}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">👀 Today I Notice</div>
+      <div class="notices">${NOTICES.map((it,i)=>chip(pid,"n"+i,it)).join("")}</div>
+      <div style="margin-top:12px">${slider(pid,"stress","Stress level")}</div>
+      <div class="inline" style="margin-top:6px"><label style="font-size:14px">One word for today: ${txt(pid,"word","one word…",160)}</label></div>
+    </div>
+
+    <div class="block"><div class="blocklabel">✍️ Journal Prompts</div>
+      ${d.prompts.map((q,i)=>`<div class="prompt"><div class="q"><span class="num">${i+1}</span>${esc(q)}</div>${ta(pid,"p"+i,"Write honestly — no performance points awarded here…")}</div>`).join("")}
+    </div>
+
+    <div class="block"><div class="blocklabel">⚡ Small Recovery Action</div>
+      <div class="actionbox"><span class="star">✳️</span><div>${esc(d.action)}</div></div>
+      <div style="margin-top:10px">${bigcheck(pid,"done","I did one small recovery thing today.")}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">${PILLAR_ICON[rp.pillar]} Restore Practice · ${esc(rp.pillar)}</div>
+      <div class="restorebox">${esc(rp.text)}
+        <div class="rnote">Rotates monthly — this is Round ${store.currentRound}'s ${esc(rp.pillar)} practice. Next round gets a new one.</div></div>
+      <div style="margin-top:10px">${bigcheck(pid,"rdone","I did today's restore practice.")}</div>
+    </div>
+
+    <div class="block"><div class="blocklabel">🗣️ Tonight's Reframe</div>
+      <div class="reframebox">${esc(d.reframe)}</div>
+      <div class="prompt" style="margin-top:12px"><div class="q">What I set down tonight:</div>${ta(pid,"release","Put it down here — it'll still be there tomorrow if you really want it back…",60)}</div>
+    </div>`;
+}
+
+function renderWeek(wid){
+  const w = WEEKS[wid], pid = wid;
+  return `
+    <span class="phase">After Day ${w.after}</span>
+    <h2 class="pagetitle">${esc(w.title)}</h2>
+    <div class="pagesub">Pause here before moving on. The weekly debrief is where patterns stop hiding. No shame — just data and grace.</div>
+    <div class="block"><div class="blocklabel">📊 Weekly Scorecard (0–10)</div>
+      ${SCORECARD.map((s,i)=>slider(pid,"s"+i,s)).join("")}
+    </div>
+    <div class="block"><div class="blocklabel">✍️ Debrief</div>
+      ${w.qs.map((q,i)=>`<div class="prompt"><div class="q"><span class="num">${i+1}</span>${esc(q)}</div>${ta(pid,"q"+i,"Take your time…")}</div>`).join("")}
+    </div>
+    <div class="block"><div class="blocklabel">👑 One practice I will carry into the next stretch</div>
+      ${ta(pid,"carry","Name it here…",60)}
+    </div>
+    ${wid==="w4"?`<div class="block"><div class="anchor">Recovery is not proved by never feeling tired again. It is proved by noticing earlier, asking sooner, resting without a permission slip, laughing more than last month, and refusing to abandon yourself while providing for everybody else. <b>When you're ready, start the next round from the Home page — new wisdom, new practices, same you (slightly better rested).</b></div></div>`:""}`;
+}
+
+function renderCards(){
+  return `
+    <span class="phase">Wisdom Cards · Round ${store.currentRound}</span>
+    <h2 class="pagetitle">Wisdom Cards</h2>
+    <div class="pagesub">Pocket cards for the vanity, the tote bag, and the dashboard. These show Round ${store.currentRound}'s wisdom — switch rounds and the whole deck changes. Keep the one you need where you'll actually see it; wisdom buried in a drawer is not a strategy.</div>
+    <div class="block" style="display:flex;gap:10px;align-items:center;">
+      <button class="tbtn" style="border-color:var(--line);color:var(--teal-dark);background:#fff;" onclick="window.print()">🖨️ Print the cards</button>
+      <span style="font-size:12.5px;color:var(--ink-soft);">Print single-sided on card stock and cut along the dashed borders.</span>
+    </div>
+    <div class="cardgrid">
+      ${DAYS.map(d=>{const v=wisdomFor(d);return `<div class="scard">
+        <div class="cday">Day ${String(d.n).padStart(2,"0")}</div>
+        <div class="ctitle">${esc(d.t)}</div>
+        <div class="cref">${esc(v.y)} — ${esc(v.by)}</div>
+        <div class="cverse">“${esc(v.x)}”</div>
+        <div class="clabel">Reframe</div>
+        <div class="ctext">${esc(d.reframe)}</div>
+        <div class="clabel">Prompt</div>
+        <div class="ctext">${esc(d.prompts[0])}</div>
+      </div>`;}).join("")}
+    </div>`;
+}
+
+function renderNotes(){
+  const pid="notes";
+  return `
+    <span class="phase">Anytime</span>
+    <h2 class="pagetitle">Notes + Plans</h2>
+    <div class="pagesub">A free page for anything the daily pages couldn't hold — plans, worries handed over, trip ideas, things your kid said that deserve archiving.</div>
+    <div class="block">${ta(pid,"n1","Write freely here…",420)}</div>
+    <div class="block"><div class="blocklabel">👑 Continue in Wisdom</div>
+      <div class="anchor">Recovery is not proved by never feeling tired again. It is proved by noticing earlier, asking sooner, resting honestly, laughing on purpose, and refusing to abandon yourself while providing for everybody else.</div>
+    </div>`;
+}
+
+/* ============================== NAVIGATION ============================== */
+function renderPage(){
+  const pid = store.currentPage;
+  let html;
+  if(pid==="cover") html = renderCover();
+  else if(pid==="home") html = renderHome();
+  else if(pid==="baseline") html = renderBaseline();
+  else if(pid==="cards") html = renderCards();
+  else if(pid==="notes") html = renderNotes();
+  else if(pid.startsWith("w")) html = renderWeek(pid);
+  else html = renderDay(parseInt(pid.slice(1)));
+  document.getElementById("pageContent").innerHTML = html;
+  document.getElementById("pageHost").classList.toggle("coverpage", pid==="cover");
+  bindInputs();
+  const idx = ORDER.indexOf(pid);
+  document.getElementById("prevBtn").disabled = idx<=0;
+  document.getElementById("nextBtn").disabled = idx>=ORDER.length-1;
+  refreshNavMarks();
+  window.scrollTo({top:0});
+}
+function goTo(pid){ store.currentPage = pid; save(false); renderPage(); }
+function step(dir){
+  const idx = ORDER.indexOf(store.currentPage) + dir;
+  if(idx>=0 && idx<ORDER.length) goTo(ORDER[idx]);
+}
+function switchRound(r){
+  store.currentRound = r;
+  buildRoundPick();
+  renderPage();
+  save(false);
+}
+function buildNav(){
+  const nav = document.getElementById("dayNav");
+  nav.innerHTML = ORDER.map(pid=>{
+    let label, cls="";
+    if(pid==="cover"){label="👑";cls="special";}
+    else if(pid==="home"){label="🏠";cls="special";}
+    else if(pid==="baseline"){label="Check-in";cls="special";}
+    else if(pid==="w1"){label="Wk 1";cls="special";}
+    else if(pid==="w2"){label="Wk 2";cls="special";}
+    else if(pid==="w3"){label="Wk 3";cls="special";}
+    else if(pid==="w4"){label="Close";cls="special";}
+    else if(pid==="cards"){label="🪙 Cards";cls="special";}
+    else if(pid==="notes"){label="Notes";cls="special";}
+    else label = pid.slice(1);
+    return `<button class="${cls}" data-nav="${pid}" onclick="goTo('${pid}')" title="${pid.startsWith("d")?"Day "+pid.slice(1)+": "+DAYS[pid.slice(1)-1].t:label}">${label}</button>`;
+  }).join("");
+}
+function refreshNavMarks(){
+  document.querySelectorAll("#dayNav button").forEach(b=>{
+    const pid = b.dataset.nav;
+    b.classList.toggle("active", pid===store.currentPage);
+    b.classList.toggle("hasdata", pid!=="home" && pageHasData(pid));
+  });
+}
+function buildRoundPick(){
+  const sel = document.getElementById("roundPick");
+  sel.innerHTML = Array.from({length:12},(_,i)=>{
+    const r=i+1, rd=store.rounds[r];
+    const tag = rd && rd.startDate ? " · started "+new Date(rd.startDate+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"}) : "";
+    return `<option value="${r}" ${r===store.currentRound?"selected":""}>Round ${r} · ${themeFor(r)[0]}${tag}</option>`;
+  }).join("");
+}
+document.getElementById("roundPick").addEventListener("change", e=>switchRound(parseInt(e.target.value)));
+
+/* ============================== INPUT BINDING (autosave) ============================== */
+function bindInputs(){
+  document.querySelectorAll("#pageContent [data-pid]").forEach(el=>{
+    const pid = el.dataset.pid, key = el.dataset.key;
+    if(el.type==="checkbox"){
+      el.addEventListener("change",()=>{
+        setVal(pid,key,el.checked);
+        const wrap = el.closest(".chip,.bigcheck");
+        if(wrap) wrap.classList.toggle("on",el.checked);
+      });
+    } else if(el.type==="range"){
+      el.addEventListener("input",()=>{
+        el.parentElement.querySelector(".sval").textContent = el.value;
+        setVal(pid,key,parseInt(el.value));
+      });
+    } else {
+      el.addEventListener("input",()=>setVal(pid,key,el.value));
+    }
+  });
+}
+
+/* ============================== BACKUP / RESTORE ============================== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(store,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "recover-her-journal-backup-"+new Date().toISOString().slice(0,10)+".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importData(){ document.getElementById("importFile").click(); }
+document.getElementById("importFile").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      if(!data.rounds) throw new Error("not a journal backup");
+      if(confirm("Replace everything in this journal with the backup file? Your current entries will be overwritten.")){
+        store = data; save(); buildRoundPick(); renderPage();
+      }
+    }catch(err){ alert("That file doesn't look like a journal backup."); }
+    e.target.value="";
+  };
+  reader.readAsText(f);
+});
+
+/* ============================== INIT ============================== */
+const hashPage = location.hash.replace("#","");
+if(hashPage && ORDER.includes(hashPage)) store.currentPage = hashPage;
+buildNav();
+buildRoundPick();
+renderPage();
+</script>
+</body>
+</html>
